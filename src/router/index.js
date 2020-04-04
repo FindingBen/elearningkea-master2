@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 const Courses = () => import("@/views/AllCourses.vue");
-<<<<<<< HEAD
+
 const Course = () => import("@/views/Course.vue");
 const login = () => import("@/views/login.vue");
+const Register = () => import("@/views/Register.vue");
 
 
 
@@ -30,6 +31,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: login
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register
   }
 ];
 

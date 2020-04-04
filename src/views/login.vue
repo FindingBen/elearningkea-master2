@@ -16,7 +16,7 @@
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       <br>
-      <label for="">Dont have an account yet?</label> <u><a href="">Sign up!</a></u>
+      <label for="">Dont have an account yet?</label> <u><a href="http://localhost:8080/register">Sign up!</a></u>
      
     </form>
    </div>
