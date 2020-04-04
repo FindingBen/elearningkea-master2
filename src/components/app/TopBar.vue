@@ -11,9 +11,7 @@
         </li>
         <li>
           <router-link to="/login">Login</router-link>
-          <baseButton @click="$emit('logout')" v-if="isLoggedIn"
-            >Logout</baseButton
-          >
+          <baseButton @click="$emit('logout')" v-if="false">Logout</baseButton>
         </li>
       </ul>
     </div>
@@ -22,7 +20,7 @@
 
 <script>
 export default {
-  name: "topBar"
+  name: "topBar",
 };
 </script>
 

@@ -1,29 +1,29 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-import * as firebase from 'firebase'
+import * as firebase from "firebase";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     courses: null,
-    user: null
+    user: null,
   },
   getters: {
     get_courses(state) {
       return state.courses;
     },
-    user (state) {
-      return state.user
-    }
+    user(state) {
+      return state.user;
+    },
   },
   mutations: {
     set_courses(state, courses) {
       state.courses = courses;
     },
-    setUser (state, payload) {
-      state.user = payload
-    }
+    setUser(state, payload) {
+      state.user = payload;
+    },
   },
   actions: {
     async fetch_courses({ commit }) {
@@ -33,24 +33,24 @@ export default new Vuex.Store({
       } catch (e) {
         console.log(e);
       }
-    }
-  },
-  signUserUp ({commit}, payload) {
-    firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-      .then(
-        user => {
+    },
+    signUserUp({ commit }, payload) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(payload.email, payload.password)
+        .then((user) => {
+          console.log(user);
           const newUser = {
             id: user.uid,
-            registeredMeetups: []
-          }
-          commit('setUser', newUser)
-        }
-      )
-      .catch(
-        error => {
-          console.log(error)
-        }
-      )
+            registeredMeetups: [],
+          };
+          commit("setUser", newUser);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
-  modules: {}
+
+  modules: {},
 });
