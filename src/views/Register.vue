@@ -54,13 +54,18 @@ export default {
       password: "",
     };
   },
-  //  watch: {
-  //       user (value) {
-  //         if (value !== null && value !== undefined) {
-  //           this.$router.push('/')
-  //         }
-  //       }
-  //     },
+      computed:{
+        user () {
+        return this.$store.getters.user
+      }
+      },
+      watch: {
+        user (value) {
+          if (value !== null && value !== undefined) {
+            this.$router.push('/')
+          }
+        }
+      },
   methods: {
     onSignup() {
       this.$store.dispatch("signUserUp", {

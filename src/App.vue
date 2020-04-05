@@ -10,7 +10,8 @@ export default {
   name: "App",
   components: {
     topBar
-  }
+  },
+  
 };
 </script>
 <style lang="scss">
