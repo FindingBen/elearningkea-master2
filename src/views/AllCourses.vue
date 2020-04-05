@@ -10,13 +10,13 @@
       />
     </header>
     <section class="all-courses__grid">
-      <div class="card" v-for="course in courses" :key="course.id">
+      <div class="courses-card" v-for="course in courses" :key="course.id">
         <img
           src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=600"
           alt="course image"
         />
-        <div class="card-content">
-          <div class="card-content-top">
+        <div class="courses-card-content">
+          <div class="courses-card-content-top">
             <router-link
               :to="{ name: 'Course', params: { id: course.courseId } }"
             >
@@ -28,7 +28,7 @@
             </p>
             <p>{{ course.publishedAt }}</p>
           </div>
-          <div class="card-content-footer">
+          <div class="courses-card-content-footer">
             <router-link
               :to="{ name: 'Course', params: { id: course.courseId } }"
               ><baseButton round>Watch course</baseButton></router-link
@@ -77,7 +77,7 @@ export default {
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: auto;
     grid-gap: 1.5rem;
-    .card {
+    .courses-card {
       border-bottom: 4px darken($grey-extra-dark, 10%) solid;
       border-radius: 3px;
       position: relative;
