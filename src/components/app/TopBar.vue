@@ -1,7 +1,7 @@
 <template>
   <section class="app-topbar">
     <div class="wrapper">
-      <h3>TBDCOTP</h3>
+          <router-link to="/dashboard"><h3>Dashboard</h3></router-link>   
       <ul>
         <li>
           <router-link to="/courses">Courses</router-link>
@@ -11,7 +11,10 @@
         </li>
         <li>
           <router-link to="/login">Login</router-link>
-          <baseButton @click="$emit('logout')" v-if="false">Logout</baseButton>
+          <!-- <baseButton @click="$emit('logout')" v-if="false">Logout</baseButton> -->
+        </li>
+        <li>
+           <button v-on:click="logout" class="btn btn-dark">Logout</button>
         </li>
       </ul>
     </div>
@@ -19,8 +22,22 @@
 </template>
 
 <script>
+import firebase from 'firebase';
 export default {
   name: "topBar",
+  data(){
+    return{
+      isLoggedIn:false,
+      currentUser:false
+    }
+  },
+  methods:{
+    logout:function(){
+      firebase.auth().signOut().then(()=>{
+        this.$router.push('/login')
+      })
+    }
+  }
 };
 </script>
 

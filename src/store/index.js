@@ -28,7 +28,7 @@ export default new Vuex.Store({
   actions: {
     async fetch_courses({ commit }) {
       try {
-        const courses = await axios.get("https://localhost:44310/api/courses");
+        const courses = await axios.get("https://localhost:44310/api/Courses");
         commit("set_courses", courses.data);
       } catch (e) {
         console.log(e);
@@ -66,6 +66,9 @@ export default new Vuex.Store({
             console.log(error)
           }
         )
+    },
+    getUserCourses({commit},payload){
+        
     }
   },
 

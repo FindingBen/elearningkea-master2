@@ -1,5 +1,6 @@
 <template>
   <div>
+  <form class="form-signin"></form>
     <img
       class="mb-4"
       src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
@@ -62,7 +63,7 @@ export default {
       watch: {
         user (value) {
           if (value !== null && value !== undefined) {
-            this.$router.push('/')
+            this.$router.push('/login')
           }
         }
       },
