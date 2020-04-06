@@ -1,5 +1,5 @@
 <template>
-  <button type="submit" class="baseButton" :class="{ round: round }">
+  <button @click="$emit('click')" type="submit" class="baseButton" :class="{ round: round }">
     <slot></slot>
   </button>
 </template>

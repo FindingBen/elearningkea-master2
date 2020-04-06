@@ -10,8 +10,7 @@ export default {
   name: "App",
   components: {
     topBar
-  },
-  
+  }
 };
 </script>
 <style lang="scss">
@@ -37,6 +36,9 @@ ul {
 a {
   text-decoration: none;
   color: #fff;
+}
+a:hover {
+  text-decoration: none;
 }
 
 #app {

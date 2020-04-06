@@ -2,12 +2,7 @@
   <main class="all-courses">
     <header>
       <h1>All Courses</h1>
-      <input
-        type="text"
-        v-model="searchText"
-        placeholder="Search"
-        class="input-dark"
-      />
+      <input type="text" v-model="searchText" placeholder="Search" class="input-dark" />
     </header>
     <section class="all-courses__grid">
       <div class="courses-card" v-for="course in courses" :key="course.id">
@@ -17,22 +12,17 @@
         />
         <div class="courses-card-content">
           <div class="courses-card-content-top">
-            <router-link
-              :to="{ name: 'Course', params: { id: course.courseId } }"
-            >
-              <h2>{{ course.courseTitle }}</h2></router-link
-            >
+            <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
+              <h2>{{ course.courseTitle }}</h2>
+            </router-link>
             <p class="pt-1 pb-1">{{ course.courseDescription }}</p>
-            <p class="pb-1">
-              {{ course.totalDuration }}
-            </p>
+            <p class="pb-1">{{ course.totalDuration }}</p>
             <p>{{ course.publishedAt }}</p>
           </div>
           <div class="courses-card-content-footer">
-            <router-link
-              :to="{ name: 'Course', params: { id: course.courseId } }"
-              ><baseButton round>Watch course</baseButton></router-link
-            >
+            <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
+              <baseButton round>Watch course</baseButton>
+            </router-link>
           </div>
         </div>
       </div>
@@ -116,7 +106,7 @@ export default {
         }
       }
     }
-    .card:hover {
+    .courses-card:hover {
       img {
         filter: brightness(100%);
         transition: filter 0.5s ease-in-out;
