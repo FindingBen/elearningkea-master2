@@ -91,6 +91,7 @@ export default {
       this.player = event.target;
     }
   },
+  
   async mounted() {
     await this.$store
       .dispatch("fetch_course", this.$route.params.id)

@@ -9,6 +9,29 @@
       height="72"
     />
     <h1 class="h3 mb-3 font-weight-normal">Enter your details below</h1>
+    <br />
+    <label for="email" class="sr-only">First name</label>
+    <input
+      type="text"
+      id="firstName"
+      v-model="firstName"
+      class="form-control"
+      placeholder="Name"
+      required
+      autofocus
+    />
+    <br />
+    <label for="email" class="sr-only">Last name</label>
+    <input
+      type="text"
+      id="lastName"
+      v-model="lastName"
+      class="form-control"
+      placeholder="Surname"
+      required
+      autofocus
+    />
+    <br />
     <label for="email" class="sr-only">Email address</label>
     <input
       type="email"
@@ -48,11 +71,14 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
       email: "",
       password: "",
+      firstName: "",
+      lastName: ""
     };
   },
       computed:{
@@ -72,8 +98,18 @@ export default {
       this.$store.dispatch("signUserUp", {
         email: this.email,
         password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName
       });
-    },
+    axios.post('https://localhost:44310/api/User')
+    .then((response)=>{
+      console.log(response);
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+    
+    },      
   },
 };
 </script>

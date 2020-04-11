@@ -1,4 +1,5 @@
 import * as firebase from "firebase";
+import axios from "axios";
 export default ({
     state: {
         user: null,
@@ -29,6 +30,15 @@ export default ({
                 .catch((error) => {
                     console.log(error);
                 });
+        },
+        async storeUser(user){
+            try {
+                await axios.post(
+                    `https://localhost:44310/api/User`, user
+                );
+            } catch (e) {
+                console.log(e);
+            }
         },
         signUserIn({ commit }, payload) {
             firebase
