@@ -26,11 +26,12 @@ export default ({
                 console.log(e);
             }
         },
-        async create_note(note) {
+        async create_note({ commit }, note) {
             try {
                 await axios.post(
                     `https://localhost:44310/api/notes`, note
                 );
+                commit();
             } catch (e) {
                 console.log(e);
             }
