@@ -14,8 +14,11 @@
                 class="course-page__video-content-buttons"
                 @previous="previous"
                 @next="next"
+                :videoTitle="videoTitle"
+                :videoIndex="videoIndex"
+                :videosLength="course.video.length"
             />
-            <div class="course-page__video-description p-1" v-if="course">
+            <div class="course-page__video-description p-3" v-if="course">
                 {{ course.courseDescription }}
             </div>
         </section>
@@ -56,6 +59,15 @@
             },
             notes() {
                 return this.$store.getters.get_notes;
+            },
+            videoTitle() {
+                if (this.player) {
+                    return this.player.playerInfo.videoData.title;
+                }
+                return null;
+            },
+            videoIndex() {
+                return this.course.video.findIndex(_ => _.videoId === this.activeVideo.videoId);
             }
         },
         methods: {
