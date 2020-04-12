@@ -21,6 +21,7 @@ export default ({
             state.course = course;
         },
     },
+    
     actions: {
         async fetch_courses({ commit }) {
             try {

@@ -58,7 +58,7 @@
       <label> <input type="checkbox" value="remember-me" /> Remember me </label>
     </div>
     <button
-      v-on:click="onSignup"
+      v-on:click="pushUser"
       class="btn btn-lg btn-primary btn-block"
       type="submit"
     >
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
 export default {
   data() {
     return {
@@ -97,19 +97,18 @@ export default {
     onSignup() {
       this.$store.dispatch("signUserUp", {
         email: this.email,
-        password: this.password,
+        password: this.password
+      });
+    
+    },
+    pushUser(){
+      this.$store.dispatch("createUser", {
+        email: this.email,
         firstName: this.firstName,
         lastName: this.lastName
       });
-    axios.post('https://localhost:44310/api/User')
-    .then((response)=>{
-      console.log(response);
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
-    
-    },      
+    }  
+
   },
 };
 </script>

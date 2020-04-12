@@ -1,8 +1,9 @@
 import * as firebase from "firebase";
-import axios from "axios";
+import axios from 'axios';
+
 export default ({
     state: {
-        user: null,
+        user: [],
     },
     getters: {
         user(state) {
@@ -20,21 +21,25 @@ export default ({
                 .auth()
                 .createUserWithEmailAndPassword(payload.email, payload.password)
                 .then((user) => {
-                    console.log(user);
+                    
                     const newUser = {
                         id: user.uid,
-                        registeredMeetups: [],
+                        email: user.email,
                     };
                     commit("setUser", newUser);
+                    
+                    
                 })
                 .catch((error) => {
                     console.log(error);
                 });
+
+                
         },
-        async storeUser(user){
+        async createUser(user) {
             try {
                 await axios.post(
-                    `https://localhost:44310/api/User`, user
+                    `https://localhost:44310/api/user`, user
                 );
             } catch (e) {
                 console.log(e);
