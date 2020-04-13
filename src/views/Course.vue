@@ -89,7 +89,7 @@
                 this.activeVideo = this.course.video.find(_ => _.videoId === note.videoId);
                 this.$nextTick(() => {
                     this.player.playVideo();
-                    this.player.seekTo(50, true);
+                    this.player.seekTo(note.videoTimePoint, true);
                 });
             },
             async fetchNotes() {
@@ -132,7 +132,8 @@
 
 <style lang="scss">
     .course-page {
-        height: calc(100vh - 50px);
+        max-height: calc(100vh - 50px);
+        overflow: hidden;
         display: grid;
         grid-template-columns: 5fr 1fr;
         grid-template-rows: 1fr;
