@@ -18,7 +18,7 @@ export default {
         async fetch_notes({ commit }, payload) {
             try {
                 const notes = await axios.get(
-                    `https://elearning20200412213341.azurewebsites.net/api/notes?courseId=${payload.courseId}&userId=${payload.userId}`
+                    `https://elearningkeaapi.azurewebsites.net/api/notes?courseId=${payload.courseId}&userId=${payload.userId}`
                 );
                 commit("set_notes", notes.data);
             } catch (e) {
@@ -27,10 +27,7 @@ export default {
         },
         async create_note({ commit }, note) {
             try {
-                await axios.post(
-                    `https://elearning20200412213341.azurewebsites.net/api/notes`,
-                    note
-                );
+                await axios.post(`https://elearningkeaapi.azurewebsites.net/api/notes`, note);
                 commit();
             } catch (e) {
                 console.log(e);
