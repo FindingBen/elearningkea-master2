@@ -1,5 +1,9 @@
 <template>
-    <h1>This is dashboard</h1>
+    <div>
+        <h3>Welcome..</h3>
+        <h3>You selected...course</h3>
+
+    </div>
 </template>
 
 <script>

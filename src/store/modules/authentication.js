@@ -33,7 +33,7 @@ export default ({
                         lastName: payload.lastName
                         
                     }
-                    
+                    console.log(response)
                     commit("setUser", newUser);
                     dispatch("createUser",newUser);
                    

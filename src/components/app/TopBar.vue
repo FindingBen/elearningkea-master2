@@ -11,7 +11,7 @@
         </li>
         <li>
           <router-link to="/login">Login</router-link>
-          <!-- <baseButton @click="$emit('logout')" v-if="false">Logout</baseButton> -->
+
         </li>
         <li>
            <button v-on:click="logout" class="btn btn-dark">Logout</button>
