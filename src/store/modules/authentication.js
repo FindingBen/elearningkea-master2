@@ -10,37 +10,48 @@ export default ({
             return state.user;
         },
     },
+    user:{
+        userId:"",
+    },
     mutations: {
         setUser(state, payload) {
             state.user = payload;
         },
     },
     actions: {
-        signUserUp({ commit }, payload) {
+        signUserUp({ commit, dispatch }, payload) {
+           
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(payload.email, payload.password)
-                .then((user) => {
+                .then( (response) => {         
                     
-                    const newUser = {
-                        id: user.uid,
-                        email: user.email,
-                    };
+                        const newUser = {
+                        userId: response.user.uid,
+                        email: payload.email,
+                        firstName: payload.firstName,
+                        lastName: payload.lastName
+                        
+                    }
+                    
                     commit("setUser", newUser);
-                    
-                    
+                    dispatch("createUser",newUser);
+                   
+                   
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-
-                
+            
         },
-        async createUser(user) {
+        async createUser({ commit }, user) {
+        
             try {
                 await axios.post(
-                    `https://localhost:44310/api/user`, user
+                    `https://localhost:44310/api/User`, user
                 );
+               
+                commit();
             } catch (e) {
                 console.log(e);
             }
@@ -49,10 +60,10 @@ export default ({
             firebase
                 .auth()
                 .signInWithEmailAndPassword(payload.email, payload.password)
-                .then((user) => {
+                .then((response) => {
                     const newUser = {
-                        id: user.uid,
-                    };
+                        id: response.user.uid,
+                    };       
                     commit("setUser", newUser);
                 })
                 .catch((error) => {

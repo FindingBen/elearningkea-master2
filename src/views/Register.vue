@@ -58,7 +58,7 @@
       <label> <input type="checkbox" value="remember-me" /> Remember me </label>
     </div>
     <button
-      v-on:click="pushUser"
+      v-on:click="onSignup()"
       class="btn btn-lg btn-primary btn-block"
       type="submit"
     >
@@ -78,7 +78,7 @@ export default {
       email: "",
       password: "",
       firstName: "",
-      lastName: ""
+      lastName: ""   
     };
   },
       computed:{
@@ -94,21 +94,82 @@ export default {
         }
       },
   methods: {
-    onSignup() {
-      this.$store.dispatch("signUserUp", {
+   async onSignup() {
+     
+     await this.$store.dispatch("signUserUp", {
         email: this.email,
-        password: this.password
+        password: this.password,
+        firstName:this.firstName,
+        lastName:this.lastName,
+        
       });
-    
     },
-    pushUser(){
-      this.$store.dispatch("createUser", {
-        email: this.email,
-        firstName: this.firstName,
-        lastName: this.lastName
-      });
-    }  
+    async mounted(){
+      const user={
+      email: this.email,
+      password: this.password,
+      firstName:this.firstName,
+      lastName:this.lastName,
+       
+    }
+      await this.$store.dispatch("createUser", user);
+    } 
 
   },
+
 };
 </script>
+<style scoped>
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+  text-align: center;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  text-align: center;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  text-align: center;
+}
+</style>
