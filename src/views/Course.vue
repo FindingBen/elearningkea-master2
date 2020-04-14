@@ -3,7 +3,7 @@
         <section class="course-page__video">
             <div class="course-page__video-content">
                 <youtube
-                    v-if="activeVideo"
+                    v-if="activeVideo && render"
                     :video-id="activeVideo.link"
                     player-width="100%"
                     player-height="100%"
@@ -27,10 +27,18 @@
                 <h1>Notes</h1>
             </div>
             <div class="course-page__notes-list">
-                <notesList :notes="notes" @noteClicked="noteClicked($event)" />
+                <notesList
+                    :notes="notes"
+                    :videos="course.video"
+                    @noteClicked="noteClicked($event)"
+                    @deleteNote="deleteNote($event)"
+                />
             </div>
             <div class="course-page__notes-textarea">
-                <textarea v-model="noteText"></textarea>
+                <div class="course-page__notes-textarea__wrapper">
+                    <textarea maxlength="999" v-model="noteText" rows="4"></textarea>
+                    <span>characters: {{ noteText.length }}/999</span>
+                </div>
                 <baseButton @click="addNote">Add</baseButton>
             </div>
         </section>
@@ -50,6 +58,7 @@
             return {
                 player: null,
                 activeVideo: null,
+                render: false,
                 noteText: ""
             };
         },
@@ -83,6 +92,11 @@
                     return;
                 }
                 await this.$store.dispatch("create_note", note);
+                this.noteText = "";
+                await this.fetchNotes();
+            },
+            async deleteNote(noteId) {
+                await this.$store.dispatch("delete_note", noteId);
                 await this.fetchNotes();
             },
             noteClicked(note) {
@@ -100,6 +114,7 @@
                 await this.$store.dispatch("fetch_notes", payload);
             },
             previous() {
+                this.render = false;
                 const index = this.course.video.findIndex(
                     _ => _.videoId === this.activeVideo.videoId
                 );
@@ -107,16 +122,26 @@
                     return;
                 }
                 this.activeVideo = this.course.video[index - 1];
+                this.$nextTick(() => {
+                    this.render = true;
+                });
             },
             next() {
+                this.render = false;
+
                 const index = this.course.video.findIndex(
                     _ => _.videoId === this.activeVideo.videoId
                 );
                 if (index == this.course.video.length - 1) {
                     return;
                 }
+
                 this.activeVideo = this.course.video[index + 1];
+                this.$nextTick(() => {
+                    this.render = true;
+                });
             },
+
             ready(event) {
                 this.player = event.target;
             }
@@ -124,6 +149,7 @@
         async mounted() {
             await this.$store.dispatch("fetch_course", this.$route.params.id).then(() => {
                 this.activeVideo = this.course.video[0];
+                this.render = true;
             });
             await this.fetchNotes();
         }
@@ -142,7 +168,7 @@
             display: flex;
             flex-direction: column;
             &-content {
-                flex: 5;
+                flex: 7;
                 div {
                     height: 100%;
                 }
@@ -155,16 +181,18 @@
             background: $theme-primary-shade-up;
             height: 100%;
             max-height: 100%;
+            min-height: calc(100vh - 50px);
             display: flex;
             flex-direction: column;
             &-header {
                 padding: 1rem;
                 background: lighten($theme-primary, 15%);
-                flex: 0 1 3rem;
+                flex: 0 1 auto;
             }
             &-list {
                 flex: 1 1 auto;
-                max-height: calc(100vh - 258px);
+                max-height: calc(100vh - 300px);
+                padding: 0 1rem;
                 overflow-x: hidden;
                 overflow-y: auto;
                 &::-webkit-scrollbar {
@@ -176,15 +204,24 @@
                     background-color: darkgrey !important;
                     outline: 1px solid slategrey !important;
                 }
-                padding: 1rem;
             }
             &-textarea {
-                flex: 0 1 10rem;
+                flex: 0 1 auto;
                 padding: 1rem;
                 background: lighten($theme-primary, 15%);
                 textarea {
                     width: 100%;
                     height: auto;
+                }
+                &__wrapper {
+                    position: relative;
+                    span {
+                        position: absolute;
+                        right: 0px;
+                        bottom: -14px;
+                        font-size: 0.8em;
+                        color: $grey-medium;
+                    }
                 }
             }
         }

@@ -1,6 +1,6 @@
 <template>
     <section class="flexbox align-center p-3 pb-0">
-        <p>{{ videoTitle }}</p>
+        <h4>#{{ videoIndex + 1 }} - {{ videoTitle }}</h4>
         <div class="margin-left-auto">
             <baseButton @click="$emit('previous')" :disabled="isPreviousDisabled">
                 <svg
