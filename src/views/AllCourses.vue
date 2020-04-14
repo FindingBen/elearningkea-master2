@@ -88,7 +88,7 @@
             max-width: 1200px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-auto-rows: auto;
+            grid-auto-rows: minmax(350px, 350px);
             grid-gap: 1.5rem;
             .courses-card {
                 border-bottom: 4px darken($grey-extra-dark, 10%) solid;
