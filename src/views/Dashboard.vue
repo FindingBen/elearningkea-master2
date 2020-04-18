@@ -1,60 +1,50 @@
 <template>
     <div id="Dashboard">
-        
-        <div v-for="userId in user" :key="userId.id">
+        <!-- <div v-for="userId in user" :key="userId.id">
           Hi, {{userId}}
-        </div>
-      
+        </div> -->
+        <h1>Welcome, {{ user.firstName }} {{ user.lastName }}</h1>
     </div>
 </template>
 
 <script>
-import firebase from 'firebase';
+    import firebase from "firebase";
 
-export default {
-    name:"Dashboard",
-   
-    
- data(){
-    return{
-      isLoggedIn:false,
-      currentUser:false,    
-    }
-  },
-  
-  computed:{
-  user() {
-     return this.$store.getters.user;
-},   
-},
-  created(){
-if(firebase.auth().currentUser){
-  this.isLoggedIn=true;
-  this.currentUser=firebase.auth().currentUser.uid;
-}
+    export default {
+        name: "Dashboard",
 
-},
-methods:{
-   fetchUsers(){
-   if(firebase.auth().currentUser){
-     this.currentUser=firebase.auth().currentUser.uid
-   }
-     this.$store.dispatch("fetch_user",this.currentUser);
-  },
+        data() {
+            return {
+                isLoggedIn: false,
+                currentUser: false,
+            };
+        },
 
-},
-mounted(){
-  if(!this.item){
-    this.fetchUsers()
-  }
-  
-}
- 
-}
+        computed: {
+            user() {
+                return this.$store.getters.user;
+            },
+        },
+        created() {
+            if (firebase.auth().currentUser) {
+                this.isLoggedIn = true;
+                this.currentUser = firebase.auth().currentUser.uid;
+            }
+        },
+        methods: {
+            fetchUsers() {
+                if (firebase.auth().currentUser) {
+                    this.currentUser = firebase.auth().currentUser.uid;
+                }
+                this.$store.dispatch("fetch_user", this.currentUser);
+            },
+        },
+        mounted() {
+            if (!this.item) {
+                this.fetchUsers();
+            }
+        },
+    };
 </script>
 
-<style lang="stylus" scoped>
-
-
-
-</style>
+<style lang="stylus" scoped></style>
