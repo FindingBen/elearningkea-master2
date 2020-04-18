@@ -6,6 +6,7 @@ import Vuex from "vuex";
 import courses from "./modules/courses";
 import authentication from "./modules/authentication";
 import notes from "./modules/notes";
+import account from "./modules/account";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     modules: {
         courses,
         authentication,
-        notes
+        notes,
+        account
     },
 });

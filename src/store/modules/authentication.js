@@ -3,9 +3,13 @@ import axios from 'axios';
 
 export default ({
     state: {
-        user: [],
+        users: null,
+        user:null,
     },
     getters: {
+        users(state){
+            return state.users;
+        },
         user(state) {
             return state.user;
         },
@@ -14,6 +18,9 @@ export default ({
         userId:"",
     },
     mutations: {
+        setUsers(state, payload) {
+            state.users = payload;
+        },
         setUser(state, payload) {
             state.user = payload;
         },
@@ -34,7 +41,7 @@ export default ({
                         
                     }
                     console.log(response)
-                    commit("setUser", newUser);
+                    commit("setUsers", newUser);
                     dispatch("createUser",newUser);
                    
                    
@@ -64,11 +71,35 @@ export default ({
                     const newUser = {
                         id: response.user.uid,
                     };       
-                    commit("setUser", newUser);
+                    commit("setUsers", newUser);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         },
+        async fetch_users({commit}){
+            try {
+                const users = await axios.get(
+                    "https://localhost:44310/api/User"
+                );
+                commit("setUsers", users.data);
+                
+                console.log(users.data)
+            } catch (e) {
+                console.log(e);
+            }
+            },
+            async fetch_user({ commit }, id) {
+                try {
+                    const user = await axios.get(
+                        `https://localhost:44310/api/User/${id}`
+                    );
+                    commit("setUser", user.data);
+                    console.log(user.data);
+                    
+                } catch (e) {
+                    console.log(e);
+                }
+            }
     },
 });

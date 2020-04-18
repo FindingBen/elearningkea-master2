@@ -1,11 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import firebase from 'firebase';
+ import firebase from 'firebase';
 const Courses = () => import("@/views/AllCourses.vue");
 const Course = () => import("@/views/Course.vue");
 const login = () => import("@/views/login.vue");
 const Register = () => import("@/views/Register.vue");
 const Dashboard = () => import("@/views/Dashboard.vue");
+const Account = () => import("@/views/account.vue");
 
 
 
@@ -45,6 +46,14 @@ const routes = [
     }
   },
   {
+    path: "/account",
+    name: "Account",
+    component: Account,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: "/login",
     name: "Login",
     component: login,
@@ -64,34 +73,34 @@ const router = new VueRouter({
   routes
 });
 
-// router.beforeEach((to, from, next)=>{
-//   //Chek for required authentication guard
-//   if(to.matched.some(record=>record.meta.requiresAuth)){
-//     if(!firebase.auth().currentUser){
-//       next({
-//         path: '/login',
-//         query: {
-//           redirect:to.fullPath
-//         }
-//       })
-//     }else{
-//       next();
-//     }
-//   }else if(to.matched.some(record=>record.meta.requiresGuest)){
-//     if(firebase.auth().currentUser){
-//       next({
-//         path: '/dashboard',
-//         query: {
-//           redirect:to.fullPath
-//         }
-//       })
-//     }else{
-//       next();
-//     }
-//   }else{
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next)=>{
+  //Chek for required authentication guard
+  if(to.matched.some(record=>record.meta.requiresAuth)){
+    if(!firebase.auth().currentUser){
+      next({
+        path: '/login',
+        query: {
+          redirect:to.fullPath
+        }
+      })
+    }else{
+      next();
+    }
+  }else if(to.matched.some(record=>record.meta.requiresGuest)){
+    if(firebase.auth().currentUser){
+      next({
+        path: '/dashboard',
+        query: {
+          redirect:to.fullPath
+        }
+      })
+    }else{
+      next();
+    }
+  }else{
+    next();
+  }
+});
 
 
 

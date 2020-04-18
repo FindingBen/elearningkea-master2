@@ -1,13 +1,60 @@
 <template>
-    <div>
-        <h3>Welcome..</h3>
-        <h3>You selected...course</h3>
-
+    <div id="Dashboard">
+        
+        <div v-for="userId in user" :key="userId.id">
+          Hi, {{userId}}
+        </div>
+      
     </div>
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
-    name:"Dashboard"
+    name:"Dashboard",
+   
+    
+ data(){
+    return{
+      isLoggedIn:false,
+      currentUser:false,    
+    }
+  },
+  
+  computed:{
+  user() {
+     return this.$store.getters.user;
+},   
+},
+  created(){
+if(firebase.auth().currentUser){
+  this.isLoggedIn=true;
+  this.currentUser=firebase.auth().currentUser.uid;
+}
+
+},
+methods:{
+   fetchUsers(){
+   if(firebase.auth().currentUser){
+     this.currentUser=firebase.auth().currentUser.uid
+   }
+     this.$store.dispatch("fetch_user",this.currentUser);
+  },
+
+},
+mounted(){
+  if(!this.item){
+    this.fetchUsers()
+  }
+  
+}
+ 
 }
 </script>
+
+<style lang="stylus" scoped>
+
+
+
+</style>

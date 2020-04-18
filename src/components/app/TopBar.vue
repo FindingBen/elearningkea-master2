@@ -6,15 +6,17 @@
         <li>
           <router-link to="/courses">Courses</router-link>
         </li>
-        <li>
+        <li v-if="isLoggedIn">
           <router-link to="/account">My Account</router-link>
         </li>
-        <li>
+        <li v-if="!isLoggedIn">
           <router-link to="/login">Login</router-link>
-
         </li>
-        <li>
+        <li v-if="isLoggedIn">
            <button v-on:click="logout" class="btn btn-dark">Logout</button>
+        </li>
+        <li v-if="isLoggedIn">
+          <span class="email black-text">{{currentUser}}</span>
         </li>
       </ul>
     </div>
@@ -30,6 +32,12 @@ export default {
       isLoggedIn:false,
       currentUser:false
     }
+  },
+  created(){
+if(firebase.auth().currentUser){
+  this.isLoggedIn=true;
+  this.currentUser=firebase.auth().currentUser.email;
+}
   },
   methods:{
     logout:function(){

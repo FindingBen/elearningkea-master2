@@ -39,6 +39,8 @@ export default {
                     `https://elearningkeaapi.azurewebsites.net/api/courses/${id}`
                 );
                 commit("set_course", course.data);
+                console.log(course.data);
+                
             } catch (e) {
                 console.log(e);
             }

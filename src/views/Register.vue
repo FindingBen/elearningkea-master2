@@ -1,7 +1,7 @@
 <template>
   <div>
-  <form class="form-signin"></form>
-    <img
+  <form @submit.prevent="onSignup" class="form-signin">
+<img
       class="mb-4"
       src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
       alt=""
@@ -67,6 +67,8 @@
     <br />
     <label for="">Already have an account?</label>
     <u><a href="http://localhost:8080/login">Log in</a></u>
+  </form>
+    
   </div>
 </template>
 

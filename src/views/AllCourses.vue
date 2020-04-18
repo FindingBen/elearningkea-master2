@@ -16,7 +16,7 @@
                     </div>
                     <div class="courses-card-content-footer flexbox align-center ">
                         <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
-                            <baseButton round>Watch course</baseButton>
+                            <baseButton round>Add Course</baseButton>
                         </router-link>
                         <div class="courses-card-content-footer__info">
                             <span>Duration:</span>
