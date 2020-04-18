@@ -1,21 +1,21 @@
 import * as firebase from "firebase";
-import axios from 'axios';
+import axios from "axios";
 
-export default ({
+export default {
     state: {
         users: null,
-        user:null,
+        user: null,
     },
     getters: {
-        users(state){
+        users(state) {
             return state.users;
         },
         user(state) {
             return state.user;
         },
     },
-    user:{
-        userId:"",
+    user: {
+        userId: "",
     },
     mutations: {
         setUsers(state, payload) {
@@ -27,37 +27,28 @@ export default ({
     },
     actions: {
         signUserUp({ commit, dispatch }, payload) {
-           
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(payload.email, payload.password)
-                .then( (response) => {         
-                    
-                        const newUser = {
+                .then(response => {
+                    const newUser = {
                         userId: response.user.uid,
                         email: payload.email,
                         firstName: payload.firstName,
-                        lastName: payload.lastName
-                        
-                    }
-                    console.log(response)
+                        lastName: payload.lastName,
+                    };
+                    console.log(response);
                     commit("setUsers", newUser);
-                    dispatch("createUser",newUser);
-                   
-                   
+                    dispatch("createUser", newUser);
                 })
-                .catch((error) => {
+                .catch(error => {
                     console.log(error);
                 });
-            
         },
         async createUser({ commit }, user) {
-        
             try {
-                await axios.post(
-                    `https://localhost:44310/api/User`, user
-                );
-               
+                await axios.post(`https://localhost:44310/api/User`, user);
+
                 commit();
             } catch (e) {
                 console.log(e);
@@ -67,39 +58,35 @@ export default ({
             firebase
                 .auth()
                 .signInWithEmailAndPassword(payload.email, payload.password)
-                .then((response) => {
+                .then(response => {
                     const newUser = {
                         id: response.user.uid,
-                    };       
+                    };
                     commit("setUsers", newUser);
                 })
-                .catch((error) => {
+                .catch(error => {
                     console.log(error);
                 });
         },
-        async fetch_users({commit}){
+        async fetch_users({ commit }) {
             try {
-                const users = await axios.get(
-                    "https://localhost:44310/api/User"
-                );
+                const users = await axios.get("https://localhost:44310/api/User");
                 commit("setUsers", users.data);
-                
-                console.log(users.data)
+
+                console.log(users.data);
             } catch (e) {
                 console.log(e);
             }
-            },
-            async fetch_user({ commit }, id) {
-                try {
-                    const user = await axios.get(
-                        `https://localhost:44310/api/User/${id}`
-                    );
-                    commit("setUser", user.data);
-                    console.log(user.data);
-                    
-                } catch (e) {
-                    console.log(e);
-                }
+        },
+        async fetch_user({ commit }, id) {
+            console.log("fetching user with id", id);
+            try {
+                const user = await axios.get(`https://localhost:44310/api/User/${id}`);
+                commit("setUser", user.data);
+                console.log(user);
+            } catch (e) {
+                console.log(e);
             }
+        },
     },
-});
+};
