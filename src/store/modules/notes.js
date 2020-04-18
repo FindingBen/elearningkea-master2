@@ -12,7 +12,8 @@ export default {
     mutations: {
         set_notes(state, notes) {
             state.notes = notes;
-        }
+        },
+        temp() {}
     },
     actions: {
         async fetch_notes({ commit }, payload) {
@@ -28,7 +29,16 @@ export default {
         async create_note({ commit }, note) {
             try {
                 await axios.post(`https://elearningkeaapi.azurewebsites.net/api/notes`, note);
-                commit();
+                commit("temp");
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async delete_note({ commit }, noteId) {
+            console.log(noteId);
+            try {
+                await axios.delete(`https://elearningkeaapi.azurewebsites.net/api/notes/${noteId}`);
+                commit("temp");
             } catch (e) {
                 console.log(e);
             }
