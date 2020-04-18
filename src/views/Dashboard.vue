@@ -1,8 +1,8 @@
 <template>
     <div id="Dashboard">
         
-        <div v-for="userId in user" :key="userId.id">
-          Hi, {{userId}}
+        <div>
+          Hi, {{user.firstName}}
         </div>
       
     </div>
