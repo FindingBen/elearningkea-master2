@@ -20,6 +20,13 @@
             />
             <div class="course-page__video-description p-3" v-if="course">
                 {{ course.courseDescription }}
+                <span
+                    >Complete a
+                    <router-link :to="{ name: 'Quiz', params: { id: course.courseId } }">
+                        quiz
+                    </router-link>
+                    and get a certificate on this topic!</span
+                >
             </div>
         </section>
         <section class="course-page__notes">
@@ -175,6 +182,19 @@
             }
             &-description {
                 flex: 1;
+                position: relative;
+                span {
+                    position: absolute;
+                    bottom: 1rem;
+                    right: 1rem;
+                    a {
+                        color: lighten(red, 10%);
+                        font-weight: 600;
+                    }
+                    a:hover {
+                        color: lighten(red, 12%);
+                    }
+                }
             }
         }
         &__notes {

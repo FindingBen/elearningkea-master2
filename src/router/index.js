@@ -6,6 +6,7 @@ const Course = () => import("@/views/Course.vue");
 const login = () => import("@/views/login.vue");
 const Register = () => import("@/views/Register.vue");
 const Dashboard = () => import("@/views/Dashboard.vue");
+const Quiz = () => import("@/views/Quiz.vue");
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,14 @@ const routes = [
         path: "/dashboard",
         name: "Dashboard",
         component: Dashboard,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: "/quiz/:id",
+        name: "Quiz",
+        component: Quiz,
         meta: {
             requiresAuth: true
         }
