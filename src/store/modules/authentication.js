@@ -73,15 +73,15 @@ export default {
                 const users = await axios.get("https://localhost:44310/api/User");
                 commit("setUsers", users.data);
 
-                console.log(users.data);
+               
             } catch (e) {
                 console.log(e);
             }
         },
         async fetch_user({ commit }, id) {
-            console.log("fetching user with id", id);
+           
             try {
-                const user = await axios.get(`https://localhost:44310/api/User/${id}`);
+                const user = await axios.get(`https://localhost:44310/api/User/${id}/courses`);
                 commit("setUser", user.data);
                 console.log(user);
             } catch (e) {

@@ -15,9 +15,9 @@
                         <p class="pt-1 pb-1">{{ course.courseDescription }}</p>
                     </div>
                     <div class="courses-card-content-footer flexbox align-center ">
-                        <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
-                            <baseButton round>Add Course</baseButton>
-                        </router-link>
+                        <!-- <router-link :to="{ name: 'Course', params: { id: course.courseId } }"> -->
+                            <baseButton @click="pushCourse(course)" round>Add Course</baseButton>
+                        <!-- </router-link> -->
                         <div class="courses-card-content-footer__info">
                             <span>Duration:</span>
                             <span class="pb-1 grey-font">
@@ -37,16 +37,22 @@
 </template>
 
 <script>
+ import firebase from "firebase";
+
     export default {
         name: "allCourses",
         computed: {
             courses() {
                 return this.$store.getters.get_courses;
+            },
+            course() {
+                return this.$store.getters.get_course;
             }
         },
         data() {
             return {
-                searchText: ""
+                searchText: "",
+                currentUser: false
             };
         },
         methods: {
@@ -64,11 +70,25 @@
                     return imageUrl;
                 }
                 return "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=600";
+            },
+            pushCourse(course){
+                if (firebase.auth().currentUser) {
+                    this.currentUser = firebase.auth().currentUser.uid;
+                }
+                    const userCourse={
+                        userId: this.currentUser,
+                        courseId: course.courseId,
+                    }
+                console.log(userCourse);
+                
+                  return this.$store.dispatch("addCourse",userCourse); 
             }
         },
         async mounted() {
             await this.$store.dispatch("fetch_courses");
+            
         }
+        
     };
 </script>
 
