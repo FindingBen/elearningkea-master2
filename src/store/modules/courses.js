@@ -3,7 +3,7 @@ import axios from "axios";
 export default {
     state: {
         courses: null,
-        course: null
+        course: null,
     },
     getters: {
         get_courses(state) {
@@ -11,7 +11,7 @@ export default {
         },
         get_course(state) {
             return state.course;
-        }
+        },
     },
     mutations: {
         set_courses(state, courses) {
@@ -19,7 +19,7 @@ export default {
         },
         set_course(state, course) {
             state.course = course;
-        }
+        },
     },
 
     actions: {
@@ -40,10 +40,9 @@ export default {
                 );
                 commit("set_course", course.data);
                 console.log(course.data);
-                
             } catch (e) {
                 console.log(e);
             }
-        }
-    }
+        },
+    },
 };

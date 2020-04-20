@@ -2,46 +2,29 @@ import axios from "axios";
 
 export default {
     state: {
-        courses: null,
-        course: null
+        quiz: null,
     },
     getters: {
-        get_courses(state) {
-            return state.courses;
+        get_quiz(state) {
+            return state.quiz;
         },
-        get_course(state) {
-            return state.course;
-        }
     },
     mutations: {
-        set_courses(state, courses) {
-            state.courses = courses;
+        set_quiz(state, quiz) {
+            state.quiz = quiz;
         },
-        set_course(state, course) {
-            state.course = course;
-        }
     },
 
     actions: {
-        async fetch_courses({ commit }) {
+        async fetch_course_quiz({ commit }, courseId) {
             try {
-                const courses = await axios.get(
-                    "https://elearningkeaapi.azurewebsites.net/api/courses"
+                const quiz = await axios.get(
+                    `https://elearningkeaapi.azurewebsites.net/api/quiz/?CourseId=${courseId}`
                 );
-                commit("set_courses", courses.data);
+                commit("set_quiz", quiz.data);
             } catch (e) {
                 console.log(e);
             }
         },
-        async fetch_course({ commit }, id) {
-            try {
-                const course = await axios.get(
-                    `https://elearningkeaapi.azurewebsites.net/api/courses/${id}`
-                );
-                commit("set_course", course.data);
-            } catch (e) {
-                console.log(e);
-            }
-        }
-    }
+    },
 };
