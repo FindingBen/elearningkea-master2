@@ -78,10 +78,11 @@
                     const userCourse={
                         userId: this.currentUser,
                         courseId: course.courseId,
+                        
                     }
                 console.log(userCourse);
                 
-                  return this.$store.dispatch("addCourse",userCourse); 
+                  return this.$store.dispatch("addUserCourse",userCourse); 
             }
         },
         async mounted() {

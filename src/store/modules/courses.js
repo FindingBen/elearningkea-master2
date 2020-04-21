@@ -44,5 +44,25 @@ export default {
                 console.log(e);
             }
         },
+        async fetch_userCourse({ commit }, id) {
+            try {
+                const course = await axios.get(
+                    `https://localhost:44310/api/user/${id}/courses`
+                );
+                commit("set_course", course.data.userCourse);
+                console.log(course.data.userCourse);
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async addUserCourse({ commit }, userCourse) {
+            try {
+                await axios.post(`https://localhost:44310/api/Usercourse`, userCourse);
+
+                commit();
+            } catch (e) {
+                console.log(e);
+            }
+        },
     },
 };

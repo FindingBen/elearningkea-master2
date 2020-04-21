@@ -1,13 +1,16 @@
 <template>
     <div id="Dashboard">
 
-       <div class="myjJumbotron">
+       <div>
         <h1 class="display-4">Hello, {{user.firstName}}</h1>
         <p class="lead">This is your dashboard page, you can find the courses that you previously selected below.</p>
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-</div>
+        
+       </div>
 <br>
+<hr class="my-4">
+<main class="all-courses">
+<p class="lead">Your courses:</p>
+ <section class="all-courses__grid">
         <div class="courses-card" v-for="course in userCourses" :key="course.id">
                 <img :src="getImage(course.backgroundImageUrl)" alt="course image" />
                 <div class="courses-card-content">
@@ -34,7 +37,10 @@
                         </div>
                     </div>
                 </div>
+                <hr class="my-4">
             </div>
+             </section>
+        </main>
     </div>
 </template>
 
@@ -56,7 +62,7 @@
                 return this.$store.getters.user;
             },
             userCourses(){
-                return this.$store.getters.get_userCourses;
+                return this.$store.getters.get_course;
             }
         },
         created() {
@@ -107,6 +113,7 @@
         height: 100%;
         max-width: 1200px;
         margin: 0 auto;
+       
         header {
             display: flex;
             justify-content: space-between;
@@ -174,7 +181,8 @@
         }
     }
 
-    .myjJumbotron{
+    .Jumbotron{
         background-color: cadetblue;
+        width: 50%;
     }
 </style>
