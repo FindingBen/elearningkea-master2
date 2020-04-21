@@ -1,15 +1,15 @@
 <template>
     <div id="Dashboard">
 
-       <div>
-        <h1 class="display-4">Hello, {{user.firstName}}</h1>
-        <p class="lead">This is your dashboard page, you can find the courses that you previously selected below.</p>
-        
-       </div>
 <br>
-<hr class="my-4">
+
 <main class="all-courses">
-<p class="lead">Your courses:</p>
+    <h1 class="display-4">Hello, {{user.firstName}}</h1>
+        <p class="lead">This is your dashboard page, you can find the courses that you previously selected below.</p>
+        <hr class="my-4">
+        <br>
+<h1>Your courses:</h1>
+<br>
  <section class="all-courses__grid">
         <div class="courses-card" v-for="course in userCourses" :key="course.id">
                 <img :src="getImage(course.backgroundImageUrl)" alt="course image" />
@@ -181,8 +181,14 @@
         }
     }
 
+    .hr{
+        background-color: white;
+        height: 5px;
+    }
+
     .Jumbotron{
-        background-color: cadetblue;
+        
         width: 50%;
+        text-align: center;
     }
 </style>
