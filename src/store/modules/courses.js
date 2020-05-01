@@ -44,12 +44,12 @@ export default {
                 console.log(e);
             }
         },
-        async fetch_userCourse({ commit }, id) {
+        async fetch_user_courses({ commit }, userId) {
             try {
                 const course = await axios.get(
-                    `https://localhost:44310/api/user/${id}/courses`
+                    `https://localhost:44310/api/courses/user/${userId}`
                 );
-                commit("set_course", course.data.userCourse);
+                commit("set_courses", course.data);
                 console.log(course.data.userCourse);
             } catch (e) {
                 console.log(e);

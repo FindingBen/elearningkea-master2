@@ -1,45 +1,47 @@
 <template>
     <div id="Dashboard">
+        <br />
 
-<br>
-
-<main class="all-courses">
-    <h1 class="display-4">Hello, {{user.firstName}}</h1>
-        <p class="lead">This is your dashboard page, you can find the courses that you previously selected below.</p>
-        <hr class="my-4">
-        <br>
-<h1>Your courses:</h1>
-<br>
- <section class="all-courses__grid">
-        <div class="courses-card" v-for="course in userCourses" :key="course.id">
-                <img :src="getImage(course.backgroundImageUrl)" alt="course image" />
-                <div class="courses-card-content">
-                    <div class="courses-card-content-top">
-                        <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
-                            <h2>{{ course.courseTitle }}</h2>
-                        </router-link>
-                        <p class="pt-1 pb-1">{{ course.courseDescription }}</p>
-                    </div>
-                    <div class="courses-card-content-footer flexbox align-center ">
-                        <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
-                            <baseButton round>Start course</baseButton>
-                        </router-link>
-                        <div class="courses-card-content-footer__info">
-                            <span>Duration:</span>
-                            <span class="pb-1 grey-font">
-                                {{ time_convert(course.totalDuration) }}
-                            </span>
-                            <br />
-                            <span>Published at:</span>
-                            <span class="grey-font">
-                                {{ new Date(course.publishedAt).toLocaleString() }}
-                            </span>
+        <main class="all-courses">
+            <h1 class="display-4">Hello, {{ user.firstName }}</h1>
+            <p class="lead">
+                This is your dashboard page, you can find the courses that you previously selected
+                below.
+            </p>
+            <hr class="my-4" />
+            <br />
+            <h1>Your courses:</h1>
+            <br />
+            <section class="all-courses__grid">
+                <div class="courses-card" v-for="course in userCourses" :key="course.id">
+                    <img :src="getImage(course.backgroundImageUrl)" alt="course image" />
+                    <div class="courses-card-content">
+                        <div class="courses-card-content-top">
+                            <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
+                                <h2>{{ course.courseTitle }}</h2>
+                            </router-link>
+                            <p class="pt-1 pb-1">{{ course.courseDescription }}</p>
+                        </div>
+                        <div class="courses-card-content-footer flexbox align-center ">
+                            <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
+                                <baseButton round>Start course</baseButton>
+                            </router-link>
+                            <div class="courses-card-content-footer__info">
+                                <span>Duration:</span>
+                                <span class="pb-1 grey-font">
+                                    {{ time_convert(course.totalDuration) }}
+                                </span>
+                                <br />
+                                <span>Published at:</span>
+                                <span class="grey-font">
+                                    {{ new Date(course.publishedAt).toLocaleString() }}
+                                </span>
+                            </div>
                         </div>
                     </div>
+                    <hr class="my-4" />
                 </div>
-                <hr class="my-4">
-            </div>
-             </section>
+            </section>
         </main>
     </div>
 </template>
@@ -54,16 +56,15 @@
             return {
                 isLoggedIn: false,
                 currentUser: false,
-                
             };
         },
         computed: {
             user() {
                 return this.$store.getters.user;
             },
-            userCourses(){
-                return this.$store.getters.get_course;
-            }
+            userCourses() {
+                return this.$store.getters.get_courses;
+            },
         },
         created() {
             if (firebase.auth().currentUser) {
@@ -78,10 +79,9 @@
                 }
                 this.$store.dispatch("fetch_user", this.currentUser);
             },
-            fetchCourses(){
-                this.$store.dispatch("fetch_userCourse",this.currentUser)
-            }
-            ,
+            fetchCourses() {
+                this.$store.dispatch("fetch_user_courses", this.currentUser);
+            },
             time_convert(num) {
                 const hours = Math.floor(num / 60);
                 const minutes = num % 60;
@@ -100,10 +100,8 @@
         },
 
         mounted() {
-            if (!this.item) {
-                this.fetchUsers();
-                this.fetchCourses()
-            }
+            this.fetchUsers();
+            this.fetchCourses();
         },
     };
 </script>
@@ -113,7 +111,7 @@
         height: 100%;
         max-width: 1200px;
         margin: 0 auto;
-       
+
         header {
             display: flex;
             justify-content: space-between;
@@ -181,13 +179,12 @@
         }
     }
 
-    .hr{
+    .hr {
         background-color: white;
         height: 5px;
     }
 
-    .Jumbotron{
-        
+    .Jumbotron {
         width: 50%;
         text-align: center;
     }
