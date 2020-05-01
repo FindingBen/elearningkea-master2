@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    //import firebase from "firebase";
+    import firebase from "firebase";
     export default {
         name: "quiz",
         data() {
@@ -52,15 +52,15 @@
             },
         },
         methods: {
-            setAnswer(answer) {
+            async setAnswer(answer) {
                 this.selectedAnswer = answer;
                 if (answer.id === this.currentQuestion.answer) {
                     this.selectedAnswer.isCorrect = true;
                     this.infoText = "";
                     if (this.checkIfLastQuestion() == true) {
                         // this.createUserCertificate();
+                        await this.passCourse();
                         this.infoText = `Congratulations, you have completed a quiz in a course ${this.quiz.courseTitle}`;
-
                         return;
                     }
                     this.switchToNextQuestion();
@@ -82,12 +82,20 @@
                     this.selectedAnswer = null;
                 }, 500);
             },
-            createUserCertificate() {
-                const payload = {
-                    quiz: this.quiz,
-                    userId: this.firebase.auth().currentUser.uid,
+            // createUserCertificate() {
+            //     const payload = {
+            //         quiz: this.quiz,
+            //         userId: firebase.auth().currentUser.uid,
+            //     };
+            //     this.$store.dispatch("create_user_certificate", payload);
+            // },
+            async passCourse() {
+                const courseUpdateDto = {
+                    userId: firebase.auth().currentUser.uid,
+                    courseId: this.quiz.courseId,
+                    isPassed: true,
                 };
-                this.$store.dispatch("create_user_certificate", payload);
+                await this.$store.dispatch("update_user_course", courseUpdateDto);
             },
         },
         mounted() {

@@ -58,8 +58,17 @@ export default {
         async addUserCourse({ commit }, userCourse) {
             try {
                 await axios.post(`https://localhost:44310/api/Usercourse`, userCourse);
-
                 commit();
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async update_user_course({ commit }, courseUpdateDto) {
+            try {
+                await axios.put(
+                    `https://localhost:44310/api/courses/${courseUpdateDto.courseId}/pass`,
+                    courseUpdateDto
+                );
             } catch (e) {
                 console.log(e);
             }
