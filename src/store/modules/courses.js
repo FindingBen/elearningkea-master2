@@ -66,7 +66,7 @@ export default {
         async update_user_course({ commit }, courseUpdateDto) {
             try {
                 await axios.put(
-                    `https://localhost:44310/api/courses/${courseUpdateDto.courseId}/pass`,
+                    `https://elearningkeaapi.azurewebsites.net/api/courses/${courseUpdateDto.courseId}/pass`,
                     courseUpdateDto
                 );
             } catch (e) {
