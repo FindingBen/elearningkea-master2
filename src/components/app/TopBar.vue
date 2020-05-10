@@ -1,8 +1,10 @@
 <template>
     <section class="app-topbar">
         <div class="wrapper">
-            <router-link to="/dashboard"><h3>Dashboard</h3></router-link>
             <ul>
+                <li v-if="isLoggedIn">
+                    <router-link to="/dashboard">Dashboard</router-link>
+                </li>
                 <li>
                     <router-link to="/courses">Courses</router-link>
                 </li>
@@ -19,64 +21,92 @@
                     <span class="email black-text">{{ currentUser }}</span>
                 </li>
             </ul>
+            <!-- <v-menu offset-y>
+                <template v-slot:activator="{ on }">
+                    <v-btn dark v-on="on">
+                        <v-icon>menu</v-icon>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item v-for="(item, index) in items" :key="index" :to="{ path: item.route }">
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu> -->
         </div>
     </section>
 </template>
 
 <script>
-    import firebase from "firebase";
-    export default {
-        name: "topBar",
-        data() {
-            return {
-                isLoggedIn: false,
-                currentUser: false,
-            };
-        },
-        created() {
-            if (firebase.auth().currentUser) {
-                this.isLoggedIn = true;
-                this.currentUser = firebase.auth().currentUser.email;
+import firebase from "firebase";
+export default {
+    name: "topBar",
+    data() {
+        return {
+            isLoggedIn: false,
+            currentUser: null,
+            items: [
+                { title: this.currentUser, route: "#" },
+                { title: "Dashboard", route: "/dashboard" },
+                { title: "Courses", route: "/courses" },
+                { title: "My Account", route: "/account" },
+                { title: "Login", route: "/login" },
+                { title: "Logout", route: "#" },
+            ],
+        };
+    },
+    computed: {
+        getCurrentUser() {
+            if (this.currentUser) {
+                return this.currentUser;
             }
+            return null;
         },
-        methods: {
-            logout: function() {
-                firebase
-                    .auth()
-                    .signOut()
-                    .then(() => {
-                        this.$router.push("/login");
-                    });
-            },
+    },
+    created() {
+        if (firebase.auth().currentUser) {
+            this.isLoggedIn = true;
+            this.currentUser = firebase.auth().currentUser.email;
+        }
+    },
+    methods: {
+        logout: function() {
+            firebase
+                .auth()
+                .signOut()
+                .then(() => {
+                    this.$router.push("/login");
+                });
         },
-    };
+    },
+};
 </script>
 
 <style lang="scss">
-    .app-topbar {
-        width: 100%;
-        background-color: $theme-dark;
-        height: 50px;
-        .wrapper {
-            height: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+.app-topbar {
+    width: 100%;
+    background-color: $theme-dark;
+    height: 50px;
+    .wrapper {
+        height: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        ul {
+            margin-left: auto !important;
             display: flex;
             align-items: center;
-            ul {
-                margin-left: auto;
-                display: flex;
-                align-items: center;
-                li {
-                    margin: 0 1rem;
-                    a:hover {
-                        color: $grey-medium;
-                    }
+            li {
+                margin: 0 1rem;
+                a:hover {
+                    color: $grey-medium;
                 }
-                li:last-child {
-                    margin-right: 0;
-                }
+            }
+            li:last-child {
+                margin-right: 0;
             }
         }
     }
+}
 </style>

@@ -7,6 +7,7 @@ import authentication from "./modules/authentication";
 import notes from "./modules/notes";
 import account from "./modules/account";
 import quiz from "./modules/quiz";
+import responsive from "./modules/responsive";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -20,5 +21,6 @@ export default new Vuex.Store({
         notes,
         account,
         quiz,
+        responsive,
     },
 });

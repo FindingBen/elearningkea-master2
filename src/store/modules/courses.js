@@ -25,9 +25,7 @@ export default {
     actions: {
         async fetch_courses({ commit }) {
             try {
-                const courses = await axios.get(
-                    "https://elearningkeaapi.azurewebsites.net/api/courses"
-                );
+                const courses = await axios.get("https://elearningkeaapi.azurewebsites.net/api/courses");
                 commit("set_courses", courses.data);
             } catch (e) {
                 console.log(e);
@@ -35,20 +33,15 @@ export default {
         },
         async fetch_course({ commit }, id) {
             try {
-                const course = await axios.get(
-                    `https://elearningkeaapi.azurewebsites.net/api/courses/${id}`
-                );
+                const course = await axios.get(`https://elearningkeaapi.azurewebsites.net/api/courses/${id}`);
                 commit("set_course", course.data);
-                console.log(course.data);
             } catch (e) {
                 console.log(e);
             }
         },
         async fetch_user_courses({ commit }, userId) {
             try {
-                const course = await axios.get(
-                    `https://localhost:44310/api/courses/user/${userId}`
-                );
+                const course = await axios.get(`https://localhost:44310/api/courses/user/${userId}`);
                 commit("set_courses", course.data);
                 console.log(course.data.userCourse);
             } catch (e) {

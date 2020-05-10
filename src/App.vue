@@ -1,48 +1,59 @@
 <template>
-  <div id="app">
-    <topBar />
-    <router-view />
-  </div>
+    <div id="app">
+        <v-app>
+            <topBar />
+            <router-view />
+        </v-app>
+    </div>
 </template>
 <script>
 import topBar from "@/components/app/TopBar.vue";
 export default {
-  name: "App",
-  components: {
-    topBar
-  }
+    name: "App",
+    components: {
+        topBar,
+    },
+    mounted() {
+        this.$nextTick(() => {
+            window.addEventListener("resize", () => this.$store.commit("setWindowWidth"));
+        });
+    },
 };
 </script>
 <style lang="scss">
+body,
 html {
-  * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-  }
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+    max-height: 100vh;
+    height: 100vh;
+    width: 100vw;
+    color: #ffffff;
+    background-color: $theme-primary !important;
+    overflow: hidden !important;
 }
-body {
-  height: 100vh;
-  width: 100vw;
-  color: #ffffff;
-  background-color: $theme-primary;
-  overflow: hidden;
+.theme--light.v-application {
+    color: #ffffff !important;
+    background-color: $theme-primary !important;
 }
 ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 a {
-  text-decoration: none;
-  color: #fff;
+    text-decoration: none;
+    color: #fff !important;
 }
 a:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 #app {
-  overflow: auto;
-  height: 100%;
+    overflow: auto;
+    height: 100%;
 }
 </style>

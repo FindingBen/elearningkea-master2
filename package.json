@@ -11,10 +11,12 @@
         "axios": "^0.19.2",
         "core-js": "^3.6.4",
         "firebase": "^7.13.2",
+        "material-design-icons-iconfont": "^5.0.1",
         "stylus-loader": "^3.0.2",
         "vue": "^2.6.11",
         "vue-router": "^3.1.5",
         "vue-youtube-embed": "^2.2.2",
+        "vuetify": "^2.2.27",
         "vuex": "^3.1.2"
     },
     "devDependencies": {
@@ -25,11 +27,13 @@
         "@vue/cli-service": "~4.2.0",
         "@vue/eslint-config-prettier": "^6.0.0",
         "babel-eslint": "^10.0.3",
+        "deepmerge": "^4.2.2",
         "eslint": "^6.7.2",
         "eslint-plugin-prettier": "^3.1.1",
         "eslint-plugin-vue": "^6.1.2",
+        "fibers": "^5.0.0",
         "prettier": "^1.19.1",
-        "sass": "^1.25.0",
+        "sass": "^1.26.5",
         "sass-loader": "^8.0.2",
         "vue-template-compiler": "^2.6.11"
     },
