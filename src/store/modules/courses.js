@@ -44,7 +44,7 @@ export default {
         },
         async fetch_user_courses({ commit }, userId) {
             try {
-                const course = await axios.get(`https://localhost:44310/api/courses/user/${userId}`);
+                const course = await axios.get(`https://elearningkeaapi.azurewebsites.net/api/courses/user/${userId}`);
                 commit("set_courses", course.data);
                 console.log(course.data.userCourse);
             } catch (e) {
@@ -53,7 +53,7 @@ export default {
         },
         async addUserCourse({ commit }, userCourse) {
             try {
-                await axios.post(`https://localhost:44310/api/Usercourse`, userCourse);
+                await axios.post(`https://elearningkeaapi.azurewebsites.net/api/Usercourse`, userCourse);
                 commit();
             } catch (e) {
                 console.log(e);
@@ -62,7 +62,7 @@ export default {
         async update_user_course({ commit }, courseUpdateDto) {
             try {
                 await axios.put(
-                    `https://localhost:44310/api/courses/${courseUpdateDto.courseId}/pass`,
+                    `https://elearningkeaapi.azurewebsites.net/api/courses/${courseUpdateDto.courseId}/pass`,
                     courseUpdateDto
                 );
             } catch (e) {
