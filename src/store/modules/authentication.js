@@ -47,7 +47,7 @@ export default {
         },
         async createUser({ commit }, user) {
             try {
-                await axios.post(`https://localhost:44310/api/User`, user);
+                await axios.post(`https://elearningkeaapi.azurewebsites.net/api/User`, user);
 
                 commit();
             } catch (e) {
@@ -70,24 +70,21 @@ export default {
         },
         async fetch_users({ commit }) {
             try {
-                const users = await axios.get("https://localhost:44310/api/User");
+                const users = await axios.get("https://elearningkeaapi.azurewebsites.net/api/User");
                 commit("setUsers", users.data);
-
-               
             } catch (e) {
                 console.log(e);
             }
         },
 
         async fetch_user({ commit }, id) {
-           
             try {
-                const user = await axios.get(`https://localhost:44310/api/User/${id}`);
+                const user = await axios.get(`https://elearningkeaapi.azurewebsites.net/api/User/${id}`);
                 commit("setUser", user.data);
                 console.log(user);
             } catch (e) {
                 console.log(e);
             }
-        }
+        },
     },
 };

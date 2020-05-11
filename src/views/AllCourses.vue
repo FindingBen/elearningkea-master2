@@ -33,10 +33,8 @@
                 </div>
             </div>
         </section>
-        <div v-else>
-            <div class="text-center">
-                <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
-            </div>
+        <div class="text-center" v-else>
+            <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
         </div>
     </main>
 </template>

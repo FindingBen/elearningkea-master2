@@ -12,6 +12,9 @@
             <br />
             <section class="all-courses__grid" v-if="userCourses">
                 <div class="courses-card" v-for="course in userCourses" :key="course.id">
+                    <div title="Course quiz passed" class="courses-card__passed" v-if="course.isPassed">
+                        <v-icon>done</v-icon>
+                    </div>
                     <img :src="getImage(course.backgroundImageUrl)" alt="course image" />
                     <div class="courses-card-content">
                         <div class="courses-card-content-top">
@@ -142,6 +145,23 @@ export default {
                 width: 100%;
                 height: 100%;
                 filter: brightness(60%);
+            }
+            &__passed {
+                position: absolute;
+                z-index: 10;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                top: 0;
+                right: 0;
+                height: 50px;
+                width: 50px;
+                transform: translate(40%, -40%);
+                background-color: green;
+                border-radius: 50%;
+                i {
+                    color: white;
+                }
             }
             &-content {
                 border-radius: 3px;
