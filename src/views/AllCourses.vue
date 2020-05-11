@@ -2,7 +2,13 @@
     <main class="all-courses">
         <header>
             <h1>All Courses</h1>
-            <input type="text" v-model="searchText" placeholder="Search" class="input-dark" />
+            <input
+                type="text"
+                v-model="searchText"
+                placeholder="Search"
+                class="input-dark"
+                v-on:keyup.enter="fetchCoursesBySearchText"
+            />
         </header>
         <section class="all-courses__grid" v-if="courses">
             <div class="courses-card" v-for="course in courses" :key="course.id">
@@ -86,9 +92,12 @@ export default {
 
             return this.$store.dispatch("addUserCourse", userCourse);
         },
+        async fetchCoursesBySearchText() {
+            await this.$store.dispatch("fetch_courses", this.searchText);
+        },
     },
     async mounted() {
-        await this.$store.dispatch("fetch_courses");
+        await this.$store.dispatch("fetch_courses", "");
     },
     destroyed() {
         this.$store.dispatch("reset_courses");

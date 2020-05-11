@@ -121,10 +121,8 @@ export default {
         },
         noteClicked(note) {
             this.activeVideo = this.course.video.find(_ => _.videoId === note.videoId);
-            this.$nextTick(() => {
-                this.player.playVideo();
-                this.player.seekTo(note.videoTimePoint, true);
-            });
+            this.player.seekTo(note.videoTimePoint, true);
+            this.player.playVideo();
         },
         async fetchNotes() {
             const payload = {
@@ -238,9 +236,11 @@ export default {
             color: #fff;
         }
         &-header {
+            display: flex;
             padding: 1rem;
             background: lighten($theme-primary, 15%);
             flex: 0 1 auto;
+            justify-content: space-between;
         }
         &-list {
             flex: 1 1 auto;

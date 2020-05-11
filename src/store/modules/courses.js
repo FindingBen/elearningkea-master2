@@ -26,9 +26,11 @@ export default {
     },
 
     actions: {
-        async fetch_courses({ commit }) {
+        async fetch_courses({ commit }, searchText) {
             try {
-                const courses = await axios.get("https://elearningkeaapi.azurewebsites.net/api/courses");
+                const courses = await axios.get(
+                    `https://elearningkeaapi.azurewebsites.net/api/courses?searchText=${searchText}`
+                );
                 commit("set_courses", courses.data);
             } catch (e) {
                 console.log(e);
