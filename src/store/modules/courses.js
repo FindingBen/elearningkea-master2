@@ -20,6 +20,9 @@ export default {
         set_course(state, course) {
             state.course = course;
         },
+        reset_courses(state, courses) {
+            state.courses = null;
+        },
     },
 
     actions: {
@@ -59,12 +62,15 @@ export default {
         async update_user_course({ commit }, courseUpdateDto) {
             try {
                 await axios.put(
-                    `https://elearningkeaapi.azurewebsites.net/api/courses/${courseUpdateDto.courseId}/pass`,
+                    `https://localhost:44310/api/courses/${courseUpdateDto.courseId}/pass`,
                     courseUpdateDto
                 );
             } catch (e) {
                 console.log(e);
             }
+        },
+        reset_courses({ commit }) {
+            commit("reset_courses");
         },
     },
 };

@@ -1,7 +1,7 @@
 <template>
     <section class="flexbox align-center p-3 pb-0">
         <h4>#{{ videoIndex + 1 }} - {{ videoTitle }}</h4>
-        <div class="margin-left-auto">
+        <div class="ml-auto">
             <baseButton @click="$emit('previous')" :disabled="isPreviousDisabled">
                 <svg
                     class="bi bi-arrow-left"
@@ -49,22 +49,22 @@
 </template>
 
 <script>
-    export default {
-        name: "bottomActions",
-        computed: {
-            isNextDisabled() {
-                return this.videoIndex !== this.videosLength - 1 ? false : true;
-            },
-            isPreviousDisabled() {
-                return this.videoIndex == 0 ? true : false;
-            }
+export default {
+    name: "bottomActions",
+    computed: {
+        isNextDisabled() {
+            return this.videoIndex !== this.videosLength - 1 ? false : true;
         },
-        props: {
-            videoTitle: String,
-            videoIndex: Number,
-            videosLength: Number
-        }
-    };
+        isPreviousDisabled() {
+            return this.videoIndex == 0 ? true : false;
+        },
+    },
+    props: {
+        videoTitle: String,
+        videoIndex: Number,
+        videosLength: Number,
+    },
+};
 </script>
 
 <style></style>

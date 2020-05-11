@@ -4,7 +4,7 @@
             <h1>All Courses</h1>
             <input type="text" v-model="searchText" placeholder="Search" class="input-dark" />
         </header>
-        <section class="all-courses__grid">
+        <section class="all-courses__grid" v-if="courses">
             <div class="courses-card" v-for="course in courses" :key="course.id">
                 <img :src="getImage(course.backgroundImageUrl)" alt="course image" />
                 <div class="courses-card-content">
@@ -33,6 +33,11 @@
                 </div>
             </div>
         </section>
+        <div v-else>
+            <div class="text-center">
+                <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
+            </div>
+        </div>
     </main>
 </template>
 
@@ -87,12 +92,16 @@ export default {
     async mounted() {
         await this.$store.dispatch("fetch_courses");
     },
+    destroyed() {
+        this.$store.dispatch("reset_courses");
+    },
 };
 </script>
 
 <style lang="scss">
 .all-courses {
     height: 100%;
+    width: 1200px;
     max-width: 1200px;
     margin: 0 auto;
     header {

@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import firebase from "firebase";
 import notesList from "@/components/course/NotesList.vue";
 import bottomActions from "@/components/course/BottomActions.vue";
 export default {
@@ -105,7 +106,7 @@ export default {
                 videoTimePoint: this.player.getCurrentTime(),
                 videoId: this.activeVideo.videoId,
                 courseId: this.course.courseId,
-                userId: "9245fe4ad402451cb9ed9c1a04247482",
+                userId: firebase.auth().currentUser.uid,
             };
             if (note.noteText.length < 1) {
                 return;
@@ -128,7 +129,7 @@ export default {
         async fetchNotes() {
             const payload = {
                 courseId: this.course.courseId,
-                userId: "9245fe4ad402451cb9ed9c1a04247482",
+                userId: firebase.auth().currentUser.uid,
             };
             await this.$store.dispatch("fetch_notes", payload);
         },
@@ -261,10 +262,7 @@ export default {
             flex: 0 1 auto;
             padding: 1rem;
             background: lighten($theme-primary, 15%) !important;
-            textarea {
-                width: 100%;
-                height: auto;
-            }
+
             &__wrapper {
                 position: relative;
                 span {
@@ -273,6 +271,12 @@ export default {
                     bottom: -14px;
                     font-size: 0.8em;
                     color: $grey-medium;
+                }
+                textarea {
+                    background-color: lighten($theme-primary, 60%) !important;
+                    color: black;
+                    width: 100%;
+                    height: auto;
                 }
             }
         }
