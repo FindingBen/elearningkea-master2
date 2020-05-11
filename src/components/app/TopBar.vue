@@ -1,6 +1,9 @@
 <template>
     <section class="app-topbar">
         <div class="wrapper">
+            <li v-if="isLoggedIn">
+                    <router-link to="/admin">Admin panel</router-link>
+                </li>
             <ul>
                 <li v-if="isLoggedIn">
                     <router-link to="/dashboard">Dashboard</router-link>

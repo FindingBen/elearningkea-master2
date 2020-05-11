@@ -71,6 +71,15 @@ export default {
                 console.log(e);
             }
         },
+        async addCourse({ commit }, course) {
+            try {
+                await axios.post(`https://localhost:44310/api/courses`, course);
+                commit();
+                console.log(course)
+            } catch (e) {
+                console.log(e);
+            }
+        },
         reset_courses({ commit }) {
             commit("reset_courses");
         },
