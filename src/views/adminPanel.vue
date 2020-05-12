@@ -1,15 +1,16 @@
 <template>
     <div id="adminPanel">
         <h2>Create a new course</h2>
-        <form @submit.prevent="addCourse()" class="form-signin">
+        <form  @submit.prevent="addCourse" class="form-signin">
             <label for="courseTitle">Course Name</label>
             <input type="text" id="courseTitle" class="form-control" placeholder="Title" v-model="courseTitle">
             <label for="courseDescription">Course Description</label>
             <input type="text" id="courseDescription" class="form-control" placeholder="Description" v-model="courseDescription">
-            <label for="totalDuration">Course duration(time)</label>
-            <input type="number" id="totalDuration" class="form-control" placeholder="Duration" v-model="totalDuration"> 
             <label for="courseCode">Course source code</label>
             <input type="text" id="courseCode" class="form-control" placeholder="link of source code" v-model="courseCode">
+            <label for="courseCode">Image</label>
+            <input type="text" id="backgroundImageUrl" class="form-control" placeholder="link of source code" v-model="backgroundImageUrl">
+            
             <br>
             <button class="btn btn-lg btn-primary btn-block" v-on:click="addCourse()">Create course</button>
         </form>
@@ -24,11 +25,13 @@ export default {
     name:'adminPanel',
     data() {
             return {
+                isAuthorized:false,
+                currentUser: false,
                 courseTitle:"",
                 courseDescription:"",
-                totalDuration:"",
-                courseCode:""
-                
+                totalDuration:Math.ceil(Math.random()*10),
+                courseCode:"",
+                backgroundImageUrl:"",
             };
         },
         computed: {
@@ -49,15 +52,18 @@ export default {
 
                     courseTitle:this.courseTitle,
                     courseDescription:this.courseDescription,
-                    totalDuration:this.totalDuration,
                     courseCode:this.courseCode,
+                    totalDuration:this.totalDuration,
+                    backgroundImageUrl:this.backgroundImageUrl
                     
                 }
                await this.$store.dispatch("addCourse", course );
                 console.log(course);
                 
-            }    
-        }
+            },
+          
+        },
+        
 }
 </script>
 

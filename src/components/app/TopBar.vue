@@ -1,7 +1,7 @@
 <template>
     <section class="app-topbar">
         <div class="wrapper">
-            <li v-if="isLoggedIn">
+            <li v-if="user.role=='Teacher' && isLoggedIn">
                     <router-link to="/admin">Admin panel</router-link>
                 </li>
             <ul>
@@ -21,7 +21,7 @@
                     <button v-on:click="logout" class="btn btn-dark">Logout</button>
                 </li>
                 <li v-if="isLoggedIn">
-                    <span class="email black-text">{{ currentUser }}</span>
+                    <span class="email black-text">{{ user.firstName }}</span>
                 </li>
             </ul>
             <!-- <v-menu offset-y>
@@ -47,7 +47,7 @@ export default {
     data() {
         return {
             isLoggedIn: false,
-            currentUser: null,
+            currentUser: false,
             items: [
                 { title: this.currentUser, route: "#" },
                 { title: "Dashboard", route: "/dashboard" },
@@ -62,15 +62,20 @@ export default {
         getCurrentUser() {
             if (this.currentUser) {
                 return this.currentUser;
+        
             }
             return null;
         },
+        user () {
+        return this.$store.getters.user
+      }
     },
     created() {
         if (firebase.auth().currentUser) {
             this.isLoggedIn = true;
             this.currentUser = firebase.auth().currentUser.email;
         }
+        
     },
     methods: {
         logout: function() {
@@ -81,7 +86,18 @@ export default {
                     this.$router.push("/login");
                 });
         },
+    async fetchUser(){
+               if (firebase.auth().currentUser) {
+                this.currentUser = firebase.auth().currentUser.uid;
+            }
+            
+            await this.$store.dispatch("fetch_user", this.currentUser);
+         
+            },            
     },
+   async mounted(){
+            await this.fetchUser();      
+          }
 };
 </script>
 
