@@ -7,7 +7,7 @@ const login = () => import("@/views/login.vue");
 const Register = () => import("@/views/Register.vue");
 const Dashboard = () => import("@/views/Dashboard.vue");
 const Quiz = () => import("@/views/Quiz.vue");
-// const Account = () => import("@/views/account.vue");
+const Admin = () => import("@/views/adminPanel.vue");
 
 Vue.use(VueRouter);
 
@@ -61,6 +61,14 @@ const routes = [
         path: "/register",
         name: "Register",
         component: Register,
+    },
+    {
+        path: "/admin",
+        name: "Admin",
+        component: Admin,
+        meta: {
+            requiresAuth: true,
+        },
     },
 ];
 

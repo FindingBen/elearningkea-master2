@@ -53,6 +53,15 @@
       required
     />
     <br />
+    <label for="accountType" class="sr-only">Account type</label>
+    <select class="browser-default custom-select" id="role" v-model="role">
+    <option selected>Select option below</option>
+    <option value="Student">Student</option>
+    <option value="Teacher">Teacher</option>
+ 
+    </select>
+    <br />
+
 
     <div class="checkbox mb-3">
       <label> <input type="checkbox" value="remember-me" /> Remember me </label>
@@ -80,7 +89,8 @@ export default {
       email: "",
       password: "",
       firstName: "",
-      lastName: ""   
+      lastName: "",
+      role:""   
     };
   },
       computed:{
@@ -103,6 +113,7 @@ export default {
         password: this.password,
         firstName:this.firstName,
         lastName:this.lastName,
+        role:this.role
         
       });
     },
@@ -112,6 +123,7 @@ export default {
       password: this.password,
       firstName:this.firstName,
       lastName:this.lastName,
+      role:this.role
        
     }
       await this.$store.dispatch("createUser", user);

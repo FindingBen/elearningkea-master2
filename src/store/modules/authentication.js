@@ -36,6 +36,7 @@ export default {
                         email: payload.email,
                         firstName: payload.firstName,
                         lastName: payload.lastName,
+                        role:payload.role
                     };
                     console.log(response);
                     commit("setUsers", newUser);
