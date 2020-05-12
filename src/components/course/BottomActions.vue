@@ -1,7 +1,7 @@
 <template>
-    <section class="flexbox align-center p-3 pb-0">
-        <h4>#{{ videoIndex + 1 }} - {{ videoTitle }}</h4>
-        <div class="ml-auto">
+    <section class="bottom-actions flexbox align-center p-3 pb-0 mb-3">
+        <h4 :title="videoTitle">{{ getTitle }}</h4>
+        <div>
             <baseButton @click="$emit('previous')" :disabled="isPreviousDisabled">
                 <svg
                     class="bi bi-arrow-left"
@@ -23,7 +23,7 @@
                     />
                 </svg>
             </baseButton>
-            <baseButton @click="$emit('next')" :disabled="isNextDisabled">
+            <baseButton @click="$emit('next')" :disabled="isNextDisabled" class="mr-2">
                 <svg
                     class="bi bi-arrow-right"
                     width="1em"
@@ -44,6 +44,8 @@
                     />
                 </svg>
             </baseButton>
+            <v-icon v-if="showDescription" @click="$emit('closeDescription')">keyboard_arrow_down</v-icon>
+            <v-icon v-if="!showDescription" @click="$emit('openDescription')">keyboard_arrow_up</v-icon>
         </div>
     </section>
 </template>
@@ -51,6 +53,13 @@
 <script>
 export default {
     name: "bottomActions",
+    props: {
+        videoTitle: String,
+        videoIndex: Number,
+        videosLength: Number,
+        showDescription: Boolean,
+        windowWidth: Number,
+    },
     computed: {
         isNextDisabled() {
             return this.videoIndex !== this.videosLength - 1 ? false : true;
@@ -58,13 +67,28 @@ export default {
         isPreviousDisabled() {
             return this.videoIndex == 0 ? true : false;
         },
-    },
-    props: {
-        videoTitle: String,
-        videoIndex: Number,
-        videosLength: Number,
+        getTitle() {
+            if (this.windowWidth < 1200) {
+                return `# ${this.videoIndex + 1}`;
+            }
+            return `# ${this.videoIndex + 1} - ${this.videoTitle}`;
+        },
     },
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.bottom-actions {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    h4 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .v-icon {
+        font-size: 24px;
+        color: #fff;
+    }
+}
+</style>

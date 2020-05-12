@@ -1,5 +1,5 @@
 <template>
-    <main class="course-page">
+    <main class="course-page" v-if="course">
         <section class="course-page__video">
             <div class="course-page__video-content">
                 <youtube
@@ -12,13 +12,17 @@
             </div>
             <bottomActions
                 class="course-page__video-content-buttons"
+                @closeDescription="showDescription = false"
+                @openDescription="showDescription = true"
                 @previous="previous"
                 @next="next"
+                :windowWidth="windowWidth"
+                :showDescription="showDescription"
                 :videoTitle="videoTitle"
                 :videoIndex="videoIndex"
                 :videosLength="course.video.length"
             />
-            <div class="course-page__video-description p-3" v-if="course">
+            <div class="course-page__video-description p-3 pt-0" v-if="showDescription">
                 {{ course.courseDescription }}
                 <span
                     >Complete a
@@ -58,6 +62,9 @@
             <v-icon>keyboard_arrow_left</v-icon>
         </section>
     </main>
+    <div class="text-center" v-else>
+        <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
+    </div>
 </template>
 
 <script>
@@ -77,6 +84,7 @@ export default {
             render: false,
             noteText: "",
             showNotes: true,
+            showDescription: true,
         };
     },
     computed: {
@@ -165,9 +173,11 @@ export default {
             handler(value) {
                 if (value < 1200) {
                     this.showNotes = false;
+                    this.showDescription = false;
                     return;
                 }
                 this.showNotes = true;
+                this.showDescription = true;
             },
             immediate: true,
         },
@@ -207,12 +217,17 @@ export default {
                 bottom: 1rem;
                 right: 1rem;
                 a {
-                    color: lighten(red, 10%);
+                    color: lighten(red, 10%) !important;
                     font-weight: 600;
                 }
                 a:hover {
                     color: lighten(red, 12%);
                 }
+            }
+        }
+        @media (max-width: 1200px) {
+            &-content {
+                flex: 1;
             }
         }
     }

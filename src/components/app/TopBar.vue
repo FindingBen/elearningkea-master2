@@ -21,18 +21,6 @@
                     <span class="email black-text">{{ currentUser }}</span>
                 </li>
             </ul>
-            <!-- <v-menu offset-y>
-                <template v-slot:activator="{ on }">
-                    <v-btn dark v-on="on">
-                        <v-icon>menu</v-icon>
-                    </v-btn>
-                </template>
-                <v-list>
-                    <v-list-item v-for="(item, index) in items" :key="index" :to="{ path: item.route }">
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu> -->
         </div>
     </section>
 </template>
@@ -45,14 +33,6 @@ export default {
         return {
             isLoggedIn: false,
             currentUser: null,
-            items: [
-                { title: this.currentUser, route: "#" },
-                { title: "Dashboard", route: "/dashboard" },
-                { title: "Courses", route: "/courses" },
-                { title: "My Account", route: "/account" },
-                { title: "Login", route: "/login" },
-                { title: "Logout", route: "#" },
-            ],
         };
     },
     computed: {
@@ -61,6 +41,9 @@ export default {
                 return this.currentUser;
             }
             return null;
+        },
+        windowWidth() {
+            return this.$store.getters.getWindowWidth;
         },
     },
     created() {
