@@ -1,9 +1,16 @@
 <template>
     <section class="app-topbar">
         <div class="wrapper">
-            <li v-if="user.role=='Teacher' && isLoggedIn">
-                    <router-link to="/admin">Admin panel</router-link>
+            
+                <ul v-if="user.role=='Teacher' && isLoggedIn">
+                    <li >
+                    <button class="btn btn-dark"><router-link to="/admin">Create</router-link></button>
                 </li>
+                <li>
+                    <button class="btn btn-dark"><router-link to="/overview">Overview</router-link></button>
+                </li>
+                </ul>
+            
             <ul>
                 <li v-if="isLoggedIn">
                     <router-link to="/dashboard">Dashboard</router-link>

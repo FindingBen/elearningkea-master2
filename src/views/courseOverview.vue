@@ -1,14 +1,10 @@
 <template>
-    <main class="all-courses">
-        <header>
+    
+        <main class="all-courses">
+            <header>
             <h1>All Courses</h1>
-            <input
-                type="text"
-                v-model="searchText"
-                placeholder="Search"
-                class="input-dark"
-                v-on:keyup.enter="fetchCoursesBySearchText"
-            />
+            
+  
         </header>
         <section class="all-courses__grid" v-if="courses">
             <div class="courses-card" v-for="course in courses" :key="course.id">
@@ -21,9 +17,9 @@
                         <p class="pt-1 pb-1">{{ course.courseDescription }}</p>
                     </div>
                     <div class="courses-card-content-footer flexbox align-center ">
-                        <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
-                            <baseButton @click="pushCourse(course)" round>Add Course</baseButton>
-                        </router-link>
+                        
+                            <baseButton @click="deleteCourse(course)" round>Delete</baseButton>
+                        
                         <div class="courses-card-content-footer__info">
                             <span>Duration:</span>
                             <span class="pb-1 grey-font">
@@ -39,33 +35,35 @@
                 </div>
             </div>
         </section>
-        <div class="text-center" v-else>
-            <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
-        </div>
-    </main>
+        </main>
+  
 </template>
 
 <script>
 import firebase from "firebase";
 
 export default {
-    name: "allCourses",
+    name: 'Overview',
+    
     computed: {
-        courses() {
-            return this.$store.getters.get_courses;
+            courses() {
+                return this.$store.getters.get_adminCourses;
+            }
+           
         },
-        course() {
-            return this.$store.getters.get_course;
-        },
-    },
-    data() {
+        data() {
         return {
-            searchText: "",
             currentUser: false,
         };
     },
-    methods: {
-        time_convert(num) {
+        created() {
+            if (firebase.auth().currentUser) {
+                this.isLoggedIn = true;
+                this.currentUser = firebase.auth().currentUser.uid;
+            }
+        },
+        methods:{
+            time_convert(num) {
             const hours = Math.floor(num / 60);
             const minutes = num % 60;
 
@@ -74,35 +72,28 @@ export default {
             }
             return `${hours} hours ${minutes} minutes`;
         },
-        getImage(imageUrl) {
+            getImage(imageUrl) {
             if (imageUrl) {
                 return imageUrl;
             }
             return "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=600";
         },
-        pushCourse(course) {
-            if (firebase.auth().currentUser) {
-                this.currentUser = firebase.auth().currentUser.uid;
-            }
-            const userCourse = {
-                userId: this.currentUser,
-                courseId: course.courseId,
-            };
-           
+             getCourses(){
 
-            return this.$store.dispatch("addUserCourse", userCourse);
+                this.$store.dispatch("fetch_adminCourses"); 
+
+            },
+            deleteCourse(course){
+               
+               return this.$store.dispatch("delete_course",course.courseId);
+               console.log(dCourse)
+            }
         },
-        async fetchCoursesBySearchText() {
-            await this.$store.dispatch("fetch_courses", this.searchText);
-        },
+         async mounted() {
+        
+        this.getCourses();
     },
-    async mounted() {
-        await this.$store.dispatch("fetch_courses", "");
-    },
-    destroyed() {
-        this.$store.dispatch("reset_courses");
-    },
-};
+}
 </script>
 
 <style lang="scss">

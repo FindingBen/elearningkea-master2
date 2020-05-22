@@ -8,6 +8,7 @@ const Register = () => import("@/views/Register.vue");
 const Dashboard = () => import("@/views/Dashboard.vue");
 const Quiz = () => import("@/views/Quiz.vue");
 const Admin = () => import("@/views/adminPanel.vue");
+const courseOverview =() => import("@/views/courseOverview.vue");
 
 Vue.use(VueRouter);
 
@@ -66,6 +67,14 @@ const routes = [
         path: "/admin",
         name: "Admin",
         component: Admin,
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        path: "/overview",
+        name: "Overview",
+        component: courseOverview,
         meta: {
             requiresAuth: true,
         },

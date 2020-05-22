@@ -1,5 +1,6 @@
 <template>
     <div id="adminPanel">
+     
         <h2>Create a new course</h2>
         <form  @submit.prevent="addCourse" class="form-signin">
             <label for="courseTitle">Course Name</label>

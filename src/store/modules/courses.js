@@ -4,6 +4,7 @@ export default {
     state: {
         courses: null,
         course: null,
+        admincourses:null
     },
     getters: {
         get_courses(state) {
@@ -11,6 +12,9 @@ export default {
         },
         get_course(state) {
             return state.course;
+        },
+        get_adminCourses(state) {
+            return state.admincourses;
         },
     },
     mutations: {
@@ -20,9 +24,13 @@ export default {
         set_course(state, course) {
             state.course = course;
         },
+        set_adminCourses(state, admincourses) {
+            state.admincourses = admincourses;
+        },
         reset_courses(state, courses) {
             state.courses = null;
         },
+        temp() {}
     },
 
     actions: {
@@ -32,6 +40,16 @@ export default {
                     `https://elearningkeaapi.azurewebsites.net/api/courses?searchText=${searchText}`
                 );
                 commit("set_courses", courses.data);
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async fetch_adminCourses({ commit }) {
+            try {
+                const courses = await axios.get(
+                    `https://localhost:44310/api/courses`
+                );
+                commit("set_adminCourses", courses.data);
             } catch (e) {
                 console.log(e);
             }
@@ -76,6 +94,15 @@ export default {
                 await axios.post(`https://localhost:44310/api/courses`, course);
                
                 commit();
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async delete_course({ commit }, courseId) {
+            
+            try {
+                await axios.delete(`https://localhost:44310/api/courses/${courseId}`);
+                commit("temp");
             } catch (e) {
                 console.log(e);
             }
