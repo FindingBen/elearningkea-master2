@@ -1,16 +1,9 @@
 <template>
     <section class="app-topbar">
         <div class="wrapper">
-            
-                <ul v-if="user.role=='Teacher' && isLoggedIn">
-                    <li >
-                    <button class="btn btn-dark"><router-link to="/admin">Create</router-link></button>
-                </li>
-                <li>
-                    <button class="btn btn-dark"><router-link to="/overview">Overview</router-link></button>
-                </li>
-                </ul>
-            
+            <li v-if="user.role == 'Teacher' && isLoggedIn">
+                <router-link to="/admin">Admin panel</router-link>
+            </li>
             <ul>
                 <li v-if="isLoggedIn">
                     <router-link to="/dashboard">Dashboard</router-link>
@@ -31,18 +24,6 @@
                     <span class="email black-text">{{ user.firstName }}</span>
                 </li>
             </ul>
-            <!-- <v-menu offset-y>
-                <template v-slot:activator="{ on }">
-                    <v-btn dark v-on="on">
-                        <v-icon>menu</v-icon>
-                    </v-btn>
-                </template>
-                <v-list>
-                    <v-list-item v-for="(item, index) in items" :key="index" :to="{ path: item.route }">
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu> -->
         </div>
     </section>
 </template>
@@ -54,7 +35,7 @@ export default {
     data() {
         return {
             isLoggedIn: false,
-            currentUser: false,
+            currentUser: null,
             items: [
                 { title: this.currentUser, route: "#" },
                 { title: "Dashboard", route: "/dashboard" },
@@ -69,20 +50,21 @@ export default {
         getCurrentUser() {
             if (this.currentUser) {
                 return this.currentUser;
-        
             }
             return null;
         },
-        user () {
-        return this.$store.getters.user
-      }
+        windowWidth() {
+            return this.$store.getters.getWindowWidth;
+        },
+        user() {
+            return this.$store.getters.user;
+        },
     },
     created() {
         if (firebase.auth().currentUser) {
             this.isLoggedIn = true;
             this.currentUser = firebase.auth().currentUser.email;
         }
-        
     },
     methods: {
         logout: function() {
@@ -93,18 +75,17 @@ export default {
                     this.$router.push("/login");
                 });
         },
-    async fetchUser(){
-               if (firebase.auth().currentUser) {
+        async fetchUser() {
+            if (firebase.auth().currentUser) {
                 this.currentUser = firebase.auth().currentUser.uid;
             }
-            
+
             await this.$store.dispatch("fetch_user", this.currentUser);
-         
-            },            
+        },
     },
-   async mounted(){
-            await this.fetchUser();      
-          }
+    async mounted() {
+        await this.fetchUser();
+    },
 };
 </script>
 
