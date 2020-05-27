@@ -10,6 +10,8 @@
                 v-on:keyup.enter="fetchCoursesBySearchText"
             />
         </header>
+        
+
         <section class="all-courses__grid" v-if="courses">
             <div class="courses-card" v-for="course in courses" :key="course.id">
                 <img :src="getImage(course.backgroundImageUrl)" alt="course image" />

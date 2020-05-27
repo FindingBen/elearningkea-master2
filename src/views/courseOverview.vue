@@ -93,6 +93,9 @@ export default {
         
         this.getCourses();
     },
+    destroyed() {
+        this.$store.dispatch("reset_courses");
+    },
 }
 </script>
 
