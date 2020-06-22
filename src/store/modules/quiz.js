@@ -18,9 +18,7 @@ export default {
     actions: {
         async fetch_course_quiz({ commit }, courseId) {
             try {
-                const quiz = await axios.get(
-                    `https://elearningkeaapi.azurewebsites.net/api/quiz/?CourseId=${courseId}`
-                );
+                const quiz = await axios.get(`https://localhost:44310/api/quiz/?CourseId=${courseId}`);
                 commit("set_quiz", quiz.data);
             } catch (e) {
                 console.log(e);

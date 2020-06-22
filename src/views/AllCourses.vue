@@ -10,7 +10,6 @@
                 v-on:keyup.enter="fetchCoursesBySearchText"
             />
         </header>
-        
 
         <section class="all-courses__grid" v-if="courses">
             <div class="courses-card" v-for="course in courses" :key="course.id">
@@ -90,7 +89,6 @@ export default {
                 userId: this.currentUser,
                 courseId: course.courseId,
             };
-           
 
             return this.$store.dispatch("addUserCourse", userCourse);
         },

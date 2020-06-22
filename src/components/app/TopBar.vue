@@ -1,22 +1,21 @@
 <template>
     <section class="app-topbar">
         <div class="wrapper">
-            
-                <div class="text-center">
-      <v-menu v-if="user.role=='Teacher' && isLoggedIn" offset-y>
-        <template v-slot:activator="{ on }">
-          <v-btn text v-on="on" color="grey">
-            <v-icon left>expand_more</v-icon>
-            <span>Admin panel</span>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item v-for="link in items" :key="link.text" :to="link.route">
-            <v-list-item-title>{{ link.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </div>
+            <div class="text-center">
+                <v-menu v-if="user.RoleId == 2 && isLoggedIn" offset-y>
+                    <template v-slot:activator="{ on }">
+                        <v-btn text v-on="on" color="grey">
+                            <v-icon left>expand_more</v-icon>
+                            <span>Admin panel</span>
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item v-for="link in items" :key="link.text" :to="link.route">
+                            <v-list-item-title>{{ link.title }}</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </div>
             <ul>
                 <li v-if="isLoggedIn">
                     <router-link to="/dashboard">Dashboard</router-link>
@@ -49,12 +48,10 @@ export default {
         return {
             isLoggedIn: false,
             currentUser: null,
-          
+
             items: [
-                
                 { title: "Course overview", route: "/overview" },
                 { title: "Create Course", route: "/admin" },
-
             ],
         };
     },
