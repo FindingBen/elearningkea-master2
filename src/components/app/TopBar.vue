@@ -2,7 +2,7 @@
     <section class="app-topbar">
         <div class="wrapper">
             <div class="text-center">
-                <v-menu v-if="user.RoleId == 2 && isLoggedIn" offset-y>
+                <v-menu v-if="user && user.RoleId == 2 && isLoggedIn" offset-y>
                     <template v-slot:activator="{ on }">
                         <v-btn text v-on="on" color="grey">
                             <v-icon left>expand_more</v-icon>
@@ -32,7 +32,7 @@
                 <li v-if="isLoggedIn">
                     <button v-on:click="logout" class="btn btn-dark">Logout</button>
                 </li>
-                <li v-if="isLoggedIn">
+                <li v-if="user && isLoggedIn">
                     <span class="email black-text">{{ user.firstName }}</span>
                 </li>
             </ul>
