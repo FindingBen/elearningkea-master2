@@ -103,7 +103,7 @@ export default {
             if (this.player) {
                 return this.player.playerInfo.videoData.title;
             }
-            return null;
+            return "";
         },
         videoIndex() {
             return this.course.video.findIndex(_ => _.videoId === this.activeVideo.videoId);
@@ -150,8 +150,9 @@ export default {
         },
         noteClicked(note) {
             this.activeVideo = this.course.video.find(_ => _.videoId === note.videoId);
+            console.log(note);
             this.player.seekTo(note.videoTimePoint, true);
-            this.player.playVideo();
+            // this.player.playVideo();
         },
         async fetchNotes() {
             const payload = {

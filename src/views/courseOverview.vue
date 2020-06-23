@@ -1,10 +1,7 @@
 <template>
-    
-        <main class="all-courses">
-            <header>
-            <h1>All Courses</h1>
-            
-  
+    <main class="all-courses">
+        <header>
+            <h1>Courses created by you</h1>
         </header>
         <section class="all-courses__grid" v-if="courses">
             <div class="courses-card" v-for="course in courses" :key="course.id">
@@ -17,9 +14,8 @@
                         <p class="pt-1 pb-1">{{ course.courseDescription }}</p>
                     </div>
                     <div class="courses-card-content-footer flexbox align-center ">
-                        
-                            <baseButton @click="deleteCourse(course)" round>Delete</baseButton>
-                        
+                        <baseButton @click="deleteCourse(course)" round>Delete</baseButton>
+
                         <div class="courses-card-content-footer__info">
                             <span>Duration:</span>
                             <span class="pb-1 grey-font">
@@ -28,42 +24,40 @@
                             <br />
                             <span>Published at:</span>
                             <span class="grey-font">
-                                {{ new Date(course.publishedAt).toLocaleString() }}
+                                {{ new Date(course.publishedAt).toLocaleDateString() }}
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        </main>
-  
+    </main>
 </template>
 
 <script>
 import firebase from "firebase";
 
 export default {
-    name: 'Overview',
-    
+    name: "Overview",
+
     computed: {
-            courses() {
-                return this.$store.getters.get_adminCourses;
-            }
-           
+        courses() {
+            return this.$store.getters.get_adminCourses;
         },
-        data() {
+    },
+    data() {
         return {
             currentUser: false,
         };
     },
-        created() {
-            if (firebase.auth().currentUser) {
-                this.isLoggedIn = true;
-                this.currentUser = firebase.auth().currentUser.uid;
-            }
-        },
-        methods:{
-            time_convert(num) {
+    created() {
+        if (firebase.auth().currentUser) {
+            this.isLoggedIn = true;
+            this.currentUser = firebase.auth().currentUser.uid;
+        }
+    },
+    methods: {
+        time_convert(num) {
             const hours = Math.floor(num / 60);
             const minutes = num % 60;
 
@@ -72,31 +66,27 @@ export default {
             }
             return `${hours} hours ${minutes} minutes`;
         },
-            getImage(imageUrl) {
+        getImage(imageUrl) {
             if (imageUrl) {
                 return imageUrl;
             }
             return "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=600";
         },
-             getCourses(){
-
-                this.$store.dispatch("fetch_adminCourses"); 
-
-            },
-            deleteCourse(course){
-               
-               return this.$store.dispatch("delete_course",course.courseId);
-               console.log(dCourse)
-            }
+        getCourses() {
+            this.$store.dispatch("fetch_adminCourses");
         },
-         async mounted() {
-        
+        deleteCourse(course) {
+            return this.$store.dispatch("delete_course", course.courseId);
+            console.log(dCourse);
+        },
+    },
+    async mounted() {
         this.getCourses();
     },
     destroyed() {
         this.$store.dispatch("reset_courses");
     },
-}
+};
 </script>
 
 <style lang="scss">

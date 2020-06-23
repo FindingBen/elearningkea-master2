@@ -1,5 +1,5 @@
 <template>
-    <main class="all-courses">
+    <main class="all-courses pb-2">
         <header>
             <h1>All Courses</h1>
             <input
@@ -37,7 +37,7 @@
                             <br />
                             <span>Published at:</span>
                             <span class="grey-font">
-                                {{ new Date(course.publishedAt).toLocaleString() }}
+                                {{ new Date(course.publishedAt).toLocaleDateString() }}
                             </span>
                         </div>
                     </div>

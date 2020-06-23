@@ -25,7 +25,7 @@
                         </div>
                         <div class="courses-card-content-footer flexbox align-center ">
                             <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
-                                <baseButton round>Start course</baseButton>
+                                <baseButton round>Watch course</baseButton>
                             </router-link>
                             <div class="courses-card-content-footer__info">
                                 <span>Duration:</span>
@@ -35,7 +35,7 @@
                                 <br />
                                 <span>Published at:</span>
                                 <span class="grey-font">
-                                    {{ new Date(course.publishedAt).toLocaleString() }}
+                                    {{ new Date(course.publishedAt).toLocaleDateString() }}
                                 </span>
                             </div>
                         </div>
