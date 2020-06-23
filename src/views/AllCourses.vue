@@ -11,7 +11,7 @@
             />
         </header>
 
-        <section class="all-courses__grid" v-if="courses">
+        <section class="all-courses__grid" v-if="courses && userCourses">
             <div class="courses-card" v-for="course in courses" :key="course.id">
                 <img :src="getImage(course.backgroundImageUrl)" alt="course image" />
                 <div class="courses-card-content">
@@ -22,9 +22,13 @@
                         <p class="pt-1 pb-1">{{ course.courseDescription }}</p>
                     </div>
                     <div class="courses-card-content-footer flexbox align-center ">
-                        <router-link :to="{ name: 'Course', params: { id: course.courseId } }">
-                            <baseButton @click="pushCourse(course)" round>Add Course</baseButton>
+                        <router-link
+                            v-if="userCourses.some(_ => _.courseId === course.courseId)"
+                            :to="{ name: 'Course', params: { id: course.courseId } }"
+                        >
+                            <baseButton round>Watch course</baseButton>
                         </router-link>
+                        <baseButton @click="pushCourse(course)" round v-else>Sign up</baseButton>
                         <div class="courses-card-content-footer__info">
                             <span>Duration:</span>
                             <span class="pb-1 grey-font">
@@ -58,6 +62,12 @@ export default {
         course() {
             return this.$store.getters.get_course;
         },
+        user() {
+            return this.$store.getters.user;
+        },
+        userCourses() {
+            return this.$store.getters.get_user_courses;
+        },
     },
     data() {
         return {
@@ -90,7 +100,10 @@ export default {
                 courseId: course.courseId,
             };
 
-            return this.$store.dispatch("addUserCourse", userCourse);
+            this.$store.dispatch("addUserCourse", userCourse).then(() => {
+                this.$store.dispatch("fetch_courses", "");
+                this.$store.dispatch("fetch_user_courses_mainpage", this.user.userId);
+            });
         },
         async fetchCoursesBySearchText() {
             await this.$store.dispatch("fetch_courses", this.searchText);
@@ -98,6 +111,7 @@ export default {
     },
     async mounted() {
         await this.$store.dispatch("fetch_courses", "");
+        await this.$store.dispatch("fetch_user_courses_mainpage", this.user.userId);
     },
     destroyed() {
         this.$store.dispatch("reset_courses");

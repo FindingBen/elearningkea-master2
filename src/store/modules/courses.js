@@ -5,6 +5,7 @@ export default {
         courses: null,
         course: null,
         admincourses: null,
+        userCourses: null,
     },
     getters: {
         get_courses(state) {
@@ -16,6 +17,9 @@ export default {
         get_adminCourses(state) {
             return state.admincourses;
         },
+        get_user_courses(state) {
+            return state.userCourses;
+        },
     },
     mutations: {
         set_courses(state, courses) {
@@ -26,6 +30,9 @@ export default {
         },
         set_adminCourses(state, admincourses) {
             state.admincourses = admincourses;
+        },
+        set_user_courses(state, userCourses) {
+            state.userCourses = userCourses;
         },
         reset_courses(state, courses) {
             state.courses = null;
@@ -62,6 +69,14 @@ export default {
             try {
                 const course = await axios.get(`https://localhost:44310/api/courses/user/${userId}`);
                 commit("set_courses", course.data);
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async fetch_user_courses_mainpage({ commit }, userId) {
+            try {
+                const course = await axios.get(`https://localhost:44310/api/courses/user/${userId}`);
+                commit("set_user_courses", course.data);
             } catch (e) {
                 console.log(e);
             }

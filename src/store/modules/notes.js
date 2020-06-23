@@ -34,6 +34,14 @@ export default {
                 console.log(e);
             }
         },
+        async update_note({ commit }, note) {
+            try {
+                await axios.put(`https://localhost:44310/api/notes/${note.noteId}`, note);
+                commit("temp");
+            } catch (e) {
+                console.log(e);
+            }
+        },
         async delete_note({ commit }, noteId) {
             console.log(noteId);
             try {

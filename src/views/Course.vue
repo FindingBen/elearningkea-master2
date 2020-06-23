@@ -44,6 +44,7 @@
                     :videos="course.video"
                     @noteClicked="noteClicked($event)"
                     @deleteNote="deleteNote($event)"
+                    @editNote="editNote($event)"
                 />
             </div>
             <div class="course-page__notes-textarea">
@@ -51,7 +52,9 @@
                     <textarea maxlength="999" v-model="noteText" rows="4"></textarea>
                     <span>characters: {{ noteText.length }}/999</span>
                 </div>
-                <baseButton @click="addNote">Add</baseButton>
+                <baseButton @click="addNote" v-if="!editNoteMode" class="mt-4">Add</baseButton>
+                <baseButton @click="saveEditedNote()" v-if="editNoteMode" class="mt-4 mr-2">Update</baseButton>
+                <baseButton @click="resetEditMode()" v-if="editNoteMode" class="mt-4">Cancel</baseButton>
             </div>
         </section>
         <section
@@ -83,8 +86,10 @@ export default {
             activeVideo: null,
             render: false,
             noteText: "",
+            editNoteMode: false,
             showNotes: true,
             showDescription: true,
+            note: null,
         };
     },
     computed: {
@@ -125,6 +130,22 @@ export default {
         },
         async deleteNote(noteId) {
             await this.$store.dispatch("delete_note", noteId);
+            await this.fetchNotes();
+        },
+        async editNote(note) {
+            this.editNoteMode = true;
+            this.note = note;
+            this.noteText = note.noteText;
+        },
+        resetEditMode() {
+            this.noteText = "";
+            this.note = null;
+            this.editNoteMode = false;
+        },
+        async saveEditedNote() {
+            this.note.noteText = this.noteText;
+            await this.$store.dispatch("update_note", this.note);
+            this.resetEditMode();
             await this.fetchNotes();
         },
         noteClicked(note) {

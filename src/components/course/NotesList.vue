@@ -6,7 +6,12 @@
                     <span @click="$emit('noteClicked', note)"
                         >video #{{ getVideoNumber(note.videoId) + 1 }} - {{ toHHMMSS(note.videoTimePoint) }}</span
                     >
-                    <span @click="$emit('deleteNote', note.noteId)" class="notesList__item-delete clickable">X</span>
+                    <div class="flexbox align-center">
+                        <v-icon @click="$emit('deleteNote', note.noteId)" class="notesList__item-delete clickable"
+                            >clear</v-icon
+                        >
+                        <v-icon @click="$emit('editNote', note)" class="notesList__item-edit clickable">edit</v-icon>
+                    </div>
                 </div>
                 <p>{{ note.noteText }}</p>
             </div>
@@ -68,11 +73,26 @@ export default {
         }
         &-delete {
             line-height: 0.8em;
-
+            font-size: 15px !important;
             margin-left: 10px;
+            padding: 2px;
             color: $grey-medium;
         }
         &-delete:hover {
+            color: $grey-light;
+            border-radius: 50%;
+            background: grey;
+        }
+        &-edit {
+            line-height: 0.8em;
+            font-size: 15px !important;
+            margin-left: 10px;
+            padding: 2px;
+            color: $grey-medium;
+        }
+        &-edit:hover {
+            border-radius: 50%;
+            background: grey;
             color: $grey-light;
         }
     }
