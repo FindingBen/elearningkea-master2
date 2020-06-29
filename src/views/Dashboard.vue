@@ -2,14 +2,14 @@
     <div id="Dashboard">
         <br />
         <main class="all-courses">
-            <h1 class="display-4" v-if="user">Hello, {{ user.firstName }}</h1>
+            <h1 class="display-3" v-if="user">Hello, {{ user.firstName }}</h1>
             <p class="lead">
-                This is your dashboard page, you can find the courses that you previously selected below.
+                This is your dashboard page, here you can find the courses that you previously signed up for.
             </p>
             <hr class="my-4" />
-            <br />
+            <!-- <br />
             <h1>Your courses:</h1>
-            <br />
+            <br /> -->
             <section class="all-courses__grid" v-if="userCourses">
                 <div class="courses-card" v-for="course in userCourses" :key="course.id">
                     <div title="Course quiz passed" class="courses-card__passed" v-if="course.isPassed">
@@ -40,7 +40,6 @@
                             </div>
                         </div>
                     </div>
-                    <hr class="my-4" />
                 </div>
             </section>
             <div v-else>

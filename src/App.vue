@@ -3,6 +3,7 @@
         <v-app>
             <topBar />
             <router-view />
+            <baseAppAlert v-if="alert" :type="alert.type" :message="alert.message" />
         </v-app>
     </div>
 </template>
@@ -12,6 +13,11 @@ export default {
     name: "App",
     components: {
         topBar,
+    },
+    computed: {
+        alert() {
+            return this.$store.getters.get_app_alert;
+        },
     },
     mounted() {
         this.$nextTick(() => {

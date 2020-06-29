@@ -234,6 +234,7 @@ export default {
         &-description {
             flex: 1;
             position: relative;
+            min-height: 123px;
             span {
                 position: absolute;
                 bottom: 1rem;

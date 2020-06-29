@@ -1,39 +1,48 @@
 <template>
     <section class="app-topbar">
         <div class="wrapper">
-            <div class="text-center">
-                <v-menu v-if="user && user.roleId == 2 && isLoggedIn" offset-y>
-                    <template v-slot:activator="{ on }">
-                        <v-btn text v-on="on" color="grey">
-                            <v-icon left>expand_more</v-icon>
-                            <span>Admin panel</span>
-                        </v-btn>
-                    </template>
-                    <v-list>
-                        <v-list-item v-for="link in items" :key="link.text" :to="link.route">
-                            <v-list-item-title>{{ link.title }}</v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
-            </div>
-            <ul>
-                <li v-if="isLoggedIn">
+            <topBarMobile
+                :user="user"
+                :isLoggedIn="isLoggedIn"
+                ref="topBarMobile"
+                @logout="logout()"
+                v-if="windowWidth && windowWidth < 850"
+            ></topBarMobile>
+            <v-icon
+                style="margin-left: auto; color: white; margin-right: 8px;"
+                v-if="windowWidth && windowWidth < 850"
+                @click.stop="showMenu()"
+            >
+                menu
+            </v-icon>
+
+            <ul v-if="windowWidth && windowWidth > 849">
+                <li v-if="isLoggedIn" :class="{ 'app-topbar-active': this.$route.fullPath.includes('dashboard') }">
                     <router-link to="/dashboard">Dashboard</router-link>
                 </li>
-                <li>
+                <li :class="{ 'app-topbar-active': this.$route.fullPath.includes('courses') }">
                     <router-link to="/courses">Courses</router-link>
                 </li>
-                <li v-if="isLoggedIn">
-                    <router-link to="/account">My Account</router-link>
-                </li>
-                <li v-if="!isLoggedIn">
+                <li v-if="!isLoggedIn" :class="{ 'app-topbar-active': this.$route.fullPath.includes('login') }">
                     <router-link to="/login">Login</router-link>
                 </li>
-                <li v-if="isLoggedIn">
-                    <button v-on:click="logout" class="btn btn-dark">Logout</button>
-                </li>
-                <li v-if="user && isLoggedIn">
-                    <span class="email black-text">{{ user.firstName }}</span>
+                <li v-if="user && isLoggedIn && user.roleId == 2">
+                    <v-menu offset-y>
+                        <template v-slot:activator="{ on }">
+                            <v-btn text v-on="on" color="white">
+                                <v-icon left>expand_more</v-icon>
+                                <span>{{ user.firstName }}</span>
+                            </v-btn>
+                        </template>
+                        <v-list>
+                            <v-list-item v-for="link in items" :key="link.text" :to="link.route">
+                                <v-list-item-title>{{ link.title }}</v-list-item-title>
+                            </v-list-item>
+                            <v-list-item @click="logout()">
+                                <v-list-item-title>Logout</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
                 </li>
             </ul>
         </div>
@@ -42,15 +51,19 @@
 
 <script>
 import firebase from "firebase";
+import topBarMobile from "./TopBarMobile";
 export default {
     name: "topBar",
+    components: {
+        topBarMobile,
+    },
     data() {
         return {
             isLoggedIn: false,
             currentUser: null,
 
             items: [
-                { title: "Course overview", route: "/overview" },
+                { title: "Courses overview", route: "/overview" },
                 { title: "Create Course", route: "/admin" },
             ],
         };
@@ -84,6 +97,9 @@ export default {
                     this.$router.push("/login");
                 });
         },
+        showMenu() {
+            this.$refs.topBarMobile.drawer = !this.$refs.topBarMobile.drawer;
+        },
         async fetchUser() {
             if (firebase.auth().currentUser) {
                 this.currentUser = firebase.auth().currentUser.uid;
@@ -103,26 +119,47 @@ export default {
     width: 100%;
     background-color: $theme-dark;
     height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .wrapper {
         height: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
+        max-width: calc(1200px - 1.5rem);
+        width: 100%;
+        margin: 0 1rem;
         display: flex;
         align-items: center;
         ul {
-            margin-left: auto !important;
-            display: flex;
-            align-items: center;
+            // margin-left: auto !important;
+            display: grid;
+            grid-template-columns: auto auto 1fr;
+            height: 100%;
+            width: 100%;
             li {
-                margin: 0 1rem;
+                height: 100%;
+                padding: 0 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 a:hover {
                     color: $grey-medium;
                 }
             }
             li:last-child {
-                margin-right: 0;
+                margin-right: 0 !important;
+                display: flex;
+                justify-content: flex-end;
+                &:hover {
+                    background: none;
+                }
+            }
+            li:hover {
+                background: rgba(160, 160, 160, 0.3);
             }
         }
     }
+}
+.app-topbar-active {
+    background: rgba(160, 160, 160, 0.3);
 }
 </style>

@@ -11,10 +11,28 @@ import responsive from "./modules/responsive";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {},
-    getters: {},
-    mutations: {},
-    actions: {},
+    state: { appAlert: null },
+    getters: {
+        get_app_alert(state) {
+            return state.appAlert;
+        },
+    },
+    mutations: {
+        set_app_alert(state, appAlert) {
+            state.appAlert = appAlert;
+        },
+        remove_app_alert(state) {
+            state.appAlert = null;
+        },
+    },
+    actions: {
+        set_app_alert({ commit }, appAlert) {
+            commit("set_app_alert", appAlert);
+        },
+        remove_app_alert({ commit }) {
+            commit("remove_app_alert");
+        },
+    },
     modules: {
         courses,
         authentication,

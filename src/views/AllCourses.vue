@@ -6,7 +6,7 @@
                 type="text"
                 v-model="searchText"
                 placeholder="Search"
-                class="input-dark"
+                class="input-dark courses-search-input"
                 v-on:keyup.enter="fetchCoursesBySearchText"
             />
         </header>
@@ -104,6 +104,10 @@ export default {
                 this.$store.dispatch("fetch_courses", "");
                 this.$store.dispatch("fetch_user_courses_mainpage", this.user.userId);
             });
+            this.$store.dispatch("set_app_alert", {
+                type: "success",
+                message: "You have successfuly signed up for a course. Happy watching!",
+            });
         },
         async fetchCoursesBySearchText() {
             await this.$store.dispatch("fetch_courses", this.searchText);
@@ -122,7 +126,7 @@ export default {
 <style lang="scss">
 .all-courses {
     height: 100%;
-    width: 1200px;
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     header {
@@ -138,22 +142,23 @@ export default {
             }
         }
     }
+    .courses-search-input {
+        @media (max-width: 600px) {
+            width: 100%;
+        }
+    }
 
     &__grid {
         max-width: 1200px;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-auto-rows: minmax(350px, 350px);
+        grid-auto-rows: minmax(350px, auto);
         grid-gap: 1.5rem;
         margin: 0 1.5rem;
-        @media (max-width: 1100px) {
+        @media (max-width: 850px) {
             grid-template-columns: 1fr;
-            grid-auto-rows: minmax(450px, 450px);
+            grid-auto-rows: auto;
         }
-        @media (max-width: 750px) {
-            grid-auto-rows: minmax(350px, 350px);
-        }
-
         .courses-card {
             border-bottom: 4px darken($grey-extra-dark, 10%) solid;
             border-radius: 3px;
@@ -164,7 +169,18 @@ export default {
                 border-radius: 3px;
                 width: 100%;
                 height: 100%;
+                max-height: 350px;
+                max-width: 350px;
                 filter: brightness(60%);
+            }
+            @media (max-width: 950px) {
+                &-content {
+                    width: 90% !important;
+                }
+                img {
+                    max-height: 450px;
+                    height: 450px;
+                }
             }
             &-content {
                 border-radius: 3px;
@@ -177,6 +193,7 @@ export default {
                 background: radial-gradient(circle at left, rgba(0, 0, 0, 0.6) 0, #000 35%);
                 display: flex;
                 flex-direction: column;
+
                 &-top {
                     flex: 1 1 auto;
                     h2 {
@@ -186,6 +203,20 @@ export default {
                     }
                 }
                 &-footer {
+                    @media (max-width: 1200px) {
+                        flex-direction: column;
+                        align-items: flex-start !important;
+
+                        &__info {
+                            margin-left: 0rem !important;
+                            order: 1 !important;
+                        }
+                        a,
+                        button {
+                            margin-top: 1rem;
+                            order: 2 !important;
+                        }
+                    }
                     &__info {
                         margin-left: 1rem;
                     }

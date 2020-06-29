@@ -3,7 +3,7 @@
         <h1>{{ quiz.courseTitle }}</h1>
         <p>{{ infoText }}</p>
         <template v-if="showQuestions">
-            <p>question {{ currentQuestionIndex + 1 }}/{{ quiz.questions.length }}</p>
+            <p>Question {{ currentQuestionIndex + 1 }}/{{ quiz.questions.length }}</p>
             <section class="quiz-question">
                 {{ currentQuestion.content }}
             </section>
@@ -25,12 +25,14 @@
         <div class="quiz-congratz" v-else>
             <h3 class="mb-2">Contratulations</h3>
             <p>You have now completed a course: {{ quiz.courseTitle }}</p>
-            <router-link :to="{ name: 'Courses' }" class="mr-2">
-                <baseButton round>Learn more</baseButton>
-            </router-link>
-            <router-link :to="{ name: 'Dashboard' }">
-                <baseButton round>Your dashboard</baseButton>
-            </router-link>
+            <div class="flexbox">
+                <router-link :to="{ name: 'Courses' }" class="mr-2" style="width: 50%">
+                    <baseButton round style="width: 100%">Learn more</baseButton>
+                </router-link>
+                <router-link :to="{ name: 'Dashboard' }" style="width: 50%">
+                    <baseButton round style="width: 100%">Your dashboard</baseButton>
+                </router-link>
+            </div>
         </div>
     </main>
     <div class="text-center" v-else>
