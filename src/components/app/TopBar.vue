@@ -27,10 +27,11 @@
                     <router-link to="/login">Login</router-link>
                 </li>
                 <li v-if="user && isLoggedIn && user.roleId == 2">
-                    <v-menu offset-y>
+                    <v-menu ref="menu" offset-y>
                         <template v-slot:activator="{ on }">
                             <v-btn text v-on="on" color="white">
-                                <v-icon left>expand_more</v-icon>
+                                <v-icon v-if="$refs.menu && !$refs.menu.isActive" left>expand_more</v-icon>
+                                <v-icon v-if="$refs.menu && $refs.menu.isActive" left>expand_less</v-icon>
                                 <span>{{ user.firstName }}</span>
                             </v-btn>
                         </template>
@@ -115,6 +116,24 @@ export default {
 </script>
 
 <style lang="scss">
+.v-list {
+    background: $theme-primary-shade-up !important;
+    * {
+        color: white !important;
+    }
+    a:hover {
+        background: lighten($theme-primary-shade-up, 5%);
+    }
+    div:hover {
+        background: lighten($theme-primary-shade-up, 5%);
+    }
+}
+.v-navigation-drawer {
+    background: $theme-primary-shade-up !important;
+    * {
+        color: white !important;
+    }
+}
 .app-topbar {
     width: 100%;
     background-color: $theme-dark;

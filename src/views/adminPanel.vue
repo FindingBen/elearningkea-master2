@@ -4,7 +4,7 @@
         <form @submit.prevent="" class="form-signin">
             <label for="courseTitle">Course Name</label>
             <input type="text" id="courseTitle" class="form-control" placeholder="Title" v-model="courseTitle" />
-            <label for="courseDescription">Course Description</label>
+            <label for="courseDescription" class="mt-3">Course Description</label>
             <input
                 type="text"
                 id="courseDescription"
@@ -12,7 +12,7 @@
                 placeholder="Description"
                 v-model="courseDescription"
             />
-            <label for="courseCode">Course source code</label>
+            <label for="courseCode" class="mt-3">Course source code</label>
             <input
                 type="text"
                 id="courseCode"
@@ -20,7 +20,7 @@
                 placeholder="link of source code"
                 v-model="courseCode"
             />
-            <label for="courseCode">Image</label>
+            <label for="courseCode" class="mt-3">Image</label>
             <input
                 type="text"
                 id="backgroundImageUrl"
@@ -30,7 +30,7 @@
             />
 
             <br />
-            <button class="btn btn-lg btn-primary btn-block" v-on:click="addCourse()">Create course</button>
+            <button class="btn btn-lg btn-primary btn-block mt-3" v-on:click="addCourse()">Create course</button>
         </form>
     </div>
 </template>
@@ -78,27 +78,11 @@ export default {
 };
 </script>
 
-<style scoped>
-html,
-body {
-    height: 100%;
-    text-align: center;
+<style lang="scss">
+#adminPanel {
+    margin: auto;
+    max-width: 1200px;
 }
-
-body {
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-align: center;
-    -ms-flex-pack: center;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
-
 .form-signin {
     width: 100%;
     max-width: 330px;

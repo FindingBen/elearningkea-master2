@@ -44,7 +44,7 @@
                 </div>
             </div>
         </section>
-        <div class="text-center" v-else>
+        <div class="loader" v-else>
             <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
         </div>
     </main>

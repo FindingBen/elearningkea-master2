@@ -2,7 +2,8 @@
     <v-navigation-drawer v-model="drawer" absolute right temporary>
         <v-list-item>
             <v-list-item-content>
-                <span class="email black-text">{{ user.firstName }}</span>
+                <span v-if="user" class="email black-text">{{ user.firstName }}</span>
+                <span v-if="!user" class="email black-text">Welcome</span>
             </v-list-item-content>
         </v-list-item>
 
@@ -27,7 +28,7 @@
             </v-list-item>
             <v-list-item to="/login" v-if="!isLoggedIn" link>
                 <v-list-item-icon>
-                    <v-icon>login</v-icon>
+                    <v-icon>face</v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
                     <v-list-item-title>Login</v-list-item-title>

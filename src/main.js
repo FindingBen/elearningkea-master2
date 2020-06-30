@@ -14,14 +14,13 @@ Vue.use(VueYouTubeEmbed);
 let app = "";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCpQPD4NQg6WDQpdgGwW96ekfBxyOeMw6E",
-    authDomain: "elearningauthentication.firebaseapp.com",
-    databaseURL: "https://elearningauthentication.firebaseio.com",
-    projectId: "elearningauthentication",
-    storageBucket: "elearningauthentication.appspot.com",
-    messagingSenderId: "951678726561",
-    appId: "1:951678726561:web:82526ab252526425e0dbe0",
-    measurementId: "G-PLC62KZ4QN",
+    apiKey: "AIzaSyATcwMNwFp4GtxG2ntYr0RBl0WzAk5R6_c",
+    authDomain: "e-learning-kea.firebaseapp.com",
+    databaseURL: "https://e-learning-kea.firebaseio.com",
+    projectId: "e-learning-kea",
+    storageBucket: "e-learning-kea.appspot.com",
+    messagingSenderId: "929724896846",
+    appId: "1:929724896846:web:c12db6a70be56bd29e951f",
 };
 firebase.initializeApp(firebaseConfig);
 

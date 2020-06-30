@@ -24,13 +24,13 @@
             />
             <div class="course-page__video-description p-3 pt-0" v-if="showDescription">
                 {{ course.courseDescription }}
-                <span
-                    >Complete a
-                    <router-link :to="{ name: 'Quiz', params: { id: course.courseId } }">
-                        quiz
-                    </router-link>
-                    and get a certificate on this topic!</span
+                <router-link
+                    title="Take a quiz to complete this course!"
+                    class="quiz-watch-button"
+                    :to="{ name: 'Quiz', params: { id: course.courseId } }"
                 >
+                    <baseButton round>Take Quiz</baseButton>
+                </router-link>
             </div>
         </section>
         <section class="course-page__notes" v-if="showNotes">
@@ -65,7 +65,7 @@
             <v-icon>keyboard_arrow_left</v-icon>
         </section>
     </main>
-    <div class="text-center" v-else>
+    <div class="loader" v-else>
         <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
     </div>
 </template>
@@ -89,6 +89,7 @@ export default {
             editNoteMode: false,
             showNotes: true,
             showDescription: true,
+            tempNote: null,
             note: null,
         };
     },
@@ -235,7 +236,7 @@ export default {
             flex: 1;
             position: relative;
             min-height: 123px;
-            span {
+            .quiz-watch-button {
                 position: absolute;
                 bottom: 1rem;
                 right: 1rem;
